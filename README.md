@@ -1,1 +1,1 @@
-# Otra_Cosa_3
+# Mineral_Classifier_App
