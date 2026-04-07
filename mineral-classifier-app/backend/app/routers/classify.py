@@ -903,6 +903,10 @@ async def classify_mineral(
         # Get mineral classifier from app state
         mineral_classifier = request.app.state.mineral_classifier
 
+        # If model not loaded, return 503
+        if mineral_classifier is None:
+            raise HTTPException(status_code=503, detail="Mineral classifier not available")
+
         # Classify
         result = mineral_classifier.predict(temp_path, top_k=5)
 

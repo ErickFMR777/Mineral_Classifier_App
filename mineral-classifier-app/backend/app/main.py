@@ -26,7 +26,11 @@ async def lifespan(app: FastAPI):
         logger.info("Mineral classification model loaded successfully")
     except Exception as e:
         logger.error(f"Failed to load mineral classifier: {e}")
-        raise
+        # Keep server running even if model failed to load; mark as unavailable
+        app.state.mineral_classifier = None
+        logger.warning(
+            "Continuing without mineral classifier (classification endpoints will return 503)"
+        )
 
     yield
 
