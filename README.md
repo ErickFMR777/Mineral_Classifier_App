@@ -52,3 +52,13 @@ mineral-classifier-app/
 ## License
 
 MIT
+
+## Run (all-in-one)
+
+If you want a single command to create the backend venv, install dependencies and start both backend and frontend in the background, use the helper script at the repository root:
+
+```bash
+./run_all.sh
+```
+
+This script writes logs to `mineral-classifier-app/backend/backend.log` and `mineral-classifier-app/frontend/frontend.log`.
