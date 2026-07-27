@@ -1,0 +1,14 @@
+{
+  "name": "mineral-classifier-app",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Mineral classification web app - static SPA with in-browser CLIP inference, deployable on Vercel",
+  "scripts": {
+    "install:frontend": "npm --prefix mineral-classifier-app/frontend install",
+    "dev": "npm --prefix mineral-classifier-app/frontend run dev",
+    "build": "npm --prefix mineral-classifier-app/frontend run build",
+    "preview": "npm --prefix mineral-classifier-app/frontend run preview",
+    "build:embeddings": "npm --prefix mineral-classifier-app/frontend run build:embeddings"
+  },
+  "license": "MIT"
+}

@@ -1,56 +1,56 @@
-# Mineral Classifier App
+# Mineral Classifier — application code
 
-Web application that classifies minerals from uploaded photos using Deep Learning (CLIP ViT-B/32 + Linear Probe).
+See the [repository README](../README.md) for deployment and the overall picture.
 
-## Features
-
-- Upload mineral photos (drag-drop or click)
-- AI-powered classification of 30 mineral types
-- Confidence scores with visual bars
-- Complete mineral properties: chemical formula, hardness, color, luster, crystal system
-- Formation processes, occurrence locations, and industrial uses
-- Top 5 alternative mineral matches
-- Responsive design with animations
-
-## Tech Stack
-
-- **Frontend**: React 18 + TypeScript + Tailwind CSS + Framer Motion
-- **Backend**: FastAPI + Transformers (CLIP) + Scikit-learn
-- **ML Model**: CLIP ViT-B/32 embeddings + Logistic Regression classifier
-
-## Quick Start
-
-### Backend
-```bash
-cd backend
-source venv/bin/activate
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+mineral-classifier-app/
+├── frontend/     React SPA + in-browser CLIP inference (this is what ships)
+├── backend/      FastAPI + PyTorch — training and local experiments only
+└── models/       Legacy copy of mineral_classes.json (canonical lives in ../data/)
 ```
 
-### Frontend
+## Frontend
+
 ```bash
 cd frontend
-npm run dev
+npm install
+npm run dev               # http://localhost:5173, /api served by a dev middleware
+npm run build             # tsc typecheck + vite build (the only lint/type gate)
+npm run build:embeddings  # regenerate public/models/text-embeddings.json
 ```
 
-### Access
-- Frontend: http://localhost:5173
-- API Docs: http://localhost:8000/docs
-- Health: http://localhost:8000/api/health
+Key directories:
 
-## Mineral Types (30)
+| Path | Role |
+|---|---|
+| `src/ml/engine.ts` | Main-thread client: decodes the photo, builds the 4 augmentation variants, talks to the worker |
+| `src/ml/worker.ts` | Loads CLIP, runs inference, blends the probe and zero-shot scores |
+| `src/ml/protocol.ts` | Message types shared by the two |
+| `src/data/minerals.ts` | Typed access to `data/minerals.json` + prediction enrichment |
+| `src/components/` | The three sections: classifier, catalog, about |
+
+## Backend (not deployed)
+
+Kept so the model can be retrained and so the original REST service still runs locally. It cannot be deployed to Vercel — torch alone exceeds the serverless bundle limit.
+
+```bash
+cd backend
+python3.11 -m venv venv && source venv/bin/activate   # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000             # http://localhost:8000/docs
+```
+
+Retraining and exporting for the browser:
+
+```bash
+pip install datasets                # not in requirements.txt
+python train_classifier.py          # writes data/mineral_classifier_head.pkl
+python export_probe.py              # converts it to frontend/public/models/probe.json
+```
+
+## Mineral types (30)
 
 Quartz, Feldspar, Mica, Calcite, Hematite, Magnetite, Galena, Pyrite, Chalcopyrite, Malachite, Limonite, Bauxite, Corundum, Diamond, Graphite, Olivine, Amphibole, Pyroxene, Fluorite, Apatite, Tourmaline, Beryl, Topaz, Garnet, Zircon, Talc, Gypsum, Sulfur, Halite, Azurite
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/classify/mineral` | Classify mineral from image |
-| GET | `/api/reference/minerals` | List all 30 mineral types |
-| GET | `/api/reference/minerals/{name}` | Get mineral details |
-| GET | `/api/model-metrics` | Model metrics & confusion matrix |
-| GET | `/api/health` | Health check |
 
 ## License
 

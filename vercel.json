@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm --prefix mineral-classifier-app/frontend install",
+  "buildCommand": "npm --prefix mineral-classifier-app/frontend run build",
+  "outputDirectory": "mineral-classifier-app/frontend/dist",
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "data/**",
+      "memory": 256,
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    { "source": "/api", "destination": "/api/index?route=" },
+    { "source": "/api/(.*)", "destination": "/api/index?route=$1" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/models/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ]
+}

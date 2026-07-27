@@ -1,64 +1,102 @@
 # Mineral Classifier App
 
-Web application that classifies minerals from uploaded photos using Deep Learning (CLIP ViT-B/32 + Linear Probe).
+Web application that identifies minerals from photos using CLIP ViT-B/32, running **entirely in the browser**. Deployable to Vercel as a static site plus one dependency-free serverless function.
 
-## Features
+## Sections
 
-- Upload mineral photos (drag & drop or click)
-- AI-powered classification of 30 mineral types
-- Confidence scores with visual indicators
-- Complete mineral properties: chemical formula, hardness, color, luster, crystal system
-- Formation processes, occurrence locations, and industrial uses
-- Top 5 alternative mineral matches
-- Model performance dashboard with per-class metrics and confusion matrix
-- Responsive design with animations
+- **Classifier** — drag & drop a specimen photo, get a classification with confidence, full geological properties and alternative matches
+- **Catalog** — searchable, filterable reference for all 30 mineral types
+- **About** — how it works, plus a live dashboard of the model's metrics and confusion matrix
 
-## Tech Stack
+## How inference works
 
-- **Frontend**: React 18 + TypeScript + Tailwind CSS + Framer Motion
-- **Backend**: FastAPI + Transformers (CLIP) + Scikit-learn
-- **ML Model**: CLIP ViT-B/32 embeddings + Logistic Regression classifier
+The original version ran CLIP on a FastAPI server. PyTorch alone is far larger than Vercel's serverless bundle limit, so the model now runs client-side:
 
-## Quick Start
+1. CLIP ViT-B/32's vision encoder (ONNX, int8, 84 MB) is downloaded once from the Hugging Face CDN and cached by the browser.
+2. A Web Worker embeds the photo four times — original, mirrored and two centre crops — and averages the results (the same test-time augmentation the Python classifier used).
+3. That 512-d embedding is scored against pre-computed text embeddings for all 30 minerals, and optionally against a trained linear probe.
 
-### Backend
+Photos never leave the device, and after the first load the classifier works offline.
+
+## Quick start
+
+Node 18+ is the only requirement.
+
 ```bash
-cd mineral-classifier-app/backend
-source venv/bin/activate
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+npm run install:frontend
+npm run dev            # http://localhost:5173
 ```
 
-### Frontend
+The dev server also answers the `/api` routes, so nothing else needs to be running. Or use `./run_all.sh`, which does the install and the one-off embedding generation for you.
+
+## Deploying to Vercel
+
+Import the repository and deploy — [vercel.json](vercel.json) already sets the build command, the output directory and the routing. Leave the **Root Directory** as the repo root; do not point it at `frontend/`, or the `api/` function and `data/` will be left out.
+
+| | |
+|---|---|
+| Build | `npm --prefix mineral-classifier-app/frontend run build` |
+| Output | `mineral-classifier-app/frontend/dist` |
+| Functions | `api/index.py` (Python standard library only, no `requirements.txt`) |
+
+The Python backend under `mineral-classifier-app/backend/` is excluded via [.vercelignore](.vercelignore). It is kept for training and local experimentation only — it is not part of the deployment.
+
+## API
+
+Served by a single serverless function. All endpoints are public, CORS-enabled and edge-cached.
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health` | Health check |
+| GET | `/api/reference/minerals` | List all 30 mineral types |
+| GET | `/api/reference/minerals/{name}` | Full record for one mineral |
+| GET | `/api/model-metrics` | Metrics and confusion matrix |
+
+`POST /api/classify/mineral` is gone and returns **410 Gone** — classification is a client-side operation now.
+
+## Data
+
+[data/](data/) is the single source of truth, read by both the SPA and the serverless function:
+
+| File | Contents |
+|---|---|
+| `minerals.json` | The 30 minerals with their full geological records |
+| `mineral_classes.json` | Class order — **this is the label index space of the trained probe** |
+| `mineral_prompts.json` | Zero-shot prompt ensemble (4 per mineral) |
+| `model_metrics.json` | Evaluation metrics shown in the About section |
+
+Editing `minerals.json` or `mineral_prompts.json` means re-running `npm run build:embeddings`.
+
+## Retraining the classifier
+
+A trained linear probe ships in `frontend/public/models/probe.json`; the worker loads it automatically and falls back to zero-shot for any class it does not cover. The training pipeline needs **no PyTorch** — features are extracted with the same ONNX model the browser runs, so the probe is guaranteed valid at inference time.
+
 ```bash
+# 1. Fetch data/*.parquet from Nech-C/mineralimage5K-98 and extract the images
+#    that map onto our 30 classes (see scripts/ in the repo history for the helper)
+
+# 2. Extract CLIP embeddings with the exact browser model
 cd mineral-classifier-app/frontend
-npm install
-npm run dev
+node scripts/extract-features.mjs <imagesDir> <manifest.json> <featuresDir>
+
+# 3. Fit the probe and regenerate the metrics dashboard
+cd ../backend
+pip install numpy scikit-learn
+python train_probe.py <featuresDir>
 ```
 
-### Access
-- Frontend: http://localhost:5173
-- API Docs: http://localhost:8000/docs
+Step 3 writes both `frontend/public/models/probe.json` and `data/model_metrics.json`. `export_probe.py` is a separate converter for anyone who still has a pickle from the legacy `train_classifier.py` (that path does require torch).
 
-## Project Structure
+Verify a trained probe against real photos with:
 
+```bash
+node scripts/verify-classifier.mjs <dirOfImagesNamedByClass>
 ```
-mineral-classifier-app/
-├── backend/          # FastAPI server + ML model
-├── frontend/         # React SPA
-├── models/           # Mineral class definitions
-└── docs/             # Documentation
-```
+
+## Tech stack
+
+React 18 · TypeScript · Tailwind CSS · Framer Motion · Transformers.js · ONNX Runtime Web · Vercel Python Functions
 
 ## License
 
 MIT
-
-## Run (all-in-one)
-
-If you want a single command to create the backend venv, install dependencies and start both backend and frontend in the background, use the helper script at the repository root:
-
-```bash
-./run_all.sh
-```
-
-This script writes logs to `mineral-classifier-app/backend/backend.log` and `mineral-classifier-app/frontend/frontend.log`.

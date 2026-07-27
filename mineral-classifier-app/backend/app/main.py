@@ -69,9 +69,9 @@ async def get_model_metrics():
     import json
     from pathlib import Path
 
-    metrics_path = Path(__file__).parent / "data" / "model_metrics.json"
-    if not metrics_path.exists():
-        metrics_path = Path(__file__).parent.parent / "data" / "model_metrics.json"
+    # Canonical location, shared with the SPA and the serverless API.
+    repo_root = Path(__file__).resolve().parents[3]
+    metrics_path = repo_root / "data" / "model_metrics.json"
     if not metrics_path.exists():
         return JSONResponse(status_code=404, content={"detail": "Metrics not found"})
 

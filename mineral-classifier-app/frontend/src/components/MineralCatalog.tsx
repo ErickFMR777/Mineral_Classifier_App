@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { MINERALS as CANONICAL, CATEGORIES } from '../data/minerals';
 
 interface MineralData {
   name: string;
@@ -12,40 +13,19 @@ interface MineralData {
   icon: string;
 }
 
-const MINERALS: MineralData[] = [
-  { name: 'Quartz', formula: 'SiO₂', hardness: '7', color: 'Colorless, white, purple, pink', luster: 'Vitreous', crystal: 'Hexagonal', category: 'Silicate', icon: '🔮' },
-  { name: 'Feldspar', formula: 'KAlSi₃O₈', hardness: '6-6.5', color: 'White, pink, blue, gray', luster: 'Vitreous', crystal: 'Triclinic', category: 'Silicate', icon: '🪨' },
-  { name: 'Mica', formula: 'KAl₂(AlSi₃O₁₀)(OH)₂', hardness: '2.5-3', color: 'Silver, brown, black', luster: 'Pearly', crystal: 'Monoclinic', category: 'Silicate', icon: '✨' },
-  { name: 'Calcite', formula: 'CaCO₃', hardness: '3', color: 'Colorless, white, yellow', luster: 'Vitreous', crystal: 'Hexagonal', category: 'Carbonate', icon: '🤍' },
-  { name: 'Hematite', formula: 'Fe₂O₃', hardness: '5.5-6.5', color: 'Red, gray, black', luster: 'Metallic', crystal: 'Hexagonal', category: 'Oxide', icon: '🔴' },
-  { name: 'Magnetite', formula: 'Fe₃O₄', hardness: '5.5-6.5', color: 'Black', luster: 'Metallic', crystal: 'Cubic', category: 'Oxide', icon: '🧲' },
-  { name: 'Galena', formula: 'PbS', hardness: '2.5', color: 'Lead gray', luster: 'Metallic', crystal: 'Cubic', category: 'Sulfide', icon: '⬛' },
-  { name: 'Pyrite', formula: 'FeS₂', hardness: '6-6.5', color: 'Brass yellow', luster: 'Metallic', crystal: 'Cubic', category: 'Sulfide', icon: '🌟' },
-  { name: 'Chalcopyrite', formula: 'CuFeS₂', hardness: '3.5-4', color: 'Brass yellow, iridescent', luster: 'Metallic', crystal: 'Tetragonal', category: 'Sulfide', icon: '🟡' },
-  { name: 'Malachite', formula: 'Cu₂CO₃(OH)₂', hardness: '3.5-4', color: 'Green (banded)', luster: 'Vitreous', crystal: 'Monoclinic', category: 'Carbonate', icon: '💚' },
-  { name: 'Limonite', formula: 'FeO(OH)·nH₂O', hardness: '4-5.5', color: 'Yellow-brown', luster: 'Earthy', crystal: 'Amorphous', category: 'Oxide', icon: '🟤' },
-  { name: 'Bauxite', formula: 'AlO(OH)', hardness: '1-3', color: 'Red-brown, white', luster: 'Earthy', crystal: 'Amorphous', category: 'Oxide', icon: '🧱' },
-  { name: 'Corundum', formula: 'Al₂O₃', hardness: '9', color: 'Red (ruby), blue (sapphire)', luster: 'Adamantine', crystal: 'Hexagonal', category: 'Oxide', icon: '💎' },
-  { name: 'Diamond', formula: 'C', hardness: '10', color: 'Colorless, yellow, blue', luster: 'Adamantine', crystal: 'Cubic', category: 'Native Element', icon: '💠' },
-  { name: 'Graphite', formula: 'C', hardness: '1-2', color: 'Steel gray, black', luster: 'Metallic', crystal: 'Hexagonal', category: 'Native Element', icon: '✏️' },
-  { name: 'Olivine', formula: '(Mg,Fe)₂SiO₄', hardness: '6.5-7', color: 'Green, yellow-green', luster: 'Vitreous', crystal: 'Orthorhombic', category: 'Silicate', icon: '🫒' },
-  { name: 'Amphibole', formula: 'Ca₂Mg₅(Si₈O₂₂)(OH)₂', hardness: '5-6', color: 'Dark green, black', luster: 'Vitreous', crystal: 'Monoclinic', category: 'Silicate', icon: '🌑' },
-  { name: 'Pyroxene', formula: 'MgSiO₃', hardness: '5-6', color: 'Dark green, black', luster: 'Vitreous', crystal: 'Monoclinic', category: 'Silicate', icon: '🌿' },
-  { name: 'Fluorite', formula: 'CaF₂', hardness: '4', color: 'Purple, blue, green, yellow', luster: 'Vitreous', crystal: 'Cubic', category: 'Halide', icon: '🟣' },
-  { name: 'Apatite', formula: 'Ca₅(PO₄)₃(F,Cl,OH)', hardness: '5', color: 'Green, blue, yellow', luster: 'Vitreous', crystal: 'Hexagonal', category: 'Phosphate', icon: '🦴' },
-  { name: 'Tourmaline', formula: 'Complex Borosilicate', hardness: '7-7.5', color: 'Black, green, pink, blue', luster: 'Vitreous', crystal: 'Hexagonal', category: 'Silicate', icon: '🌈' },
-  { name: 'Beryl', formula: 'Be₃Al₂Si₆O₁₈', hardness: '7.5-8', color: 'Green (emerald), blue (aquamarine)', luster: 'Vitreous', crystal: 'Hexagonal', category: 'Silicate', icon: '🟢' },
-  { name: 'Topaz', formula: 'Al₂SiO₄(F,OH)₂', hardness: '8', color: 'Colorless, blue, yellow, orange', luster: 'Vitreous', crystal: 'Orthorhombic', category: 'Silicate', icon: '🔶' },
-  { name: 'Garnet', formula: '(Mg,Fe,Ca)₃Al₂(SiO₄)₃', hardness: '6.5-7.5', color: 'Red, orange, green', luster: 'Vitreous', crystal: 'Cubic', category: 'Silicate', icon: '🔴' },
-  { name: 'Zircon', formula: 'ZrSiO₄', hardness: '7.5', color: 'Colorless, yellow, brown, blue', luster: 'Adamantine', crystal: 'Tetragonal', category: 'Silicate', icon: '🔷' },
-  { name: 'Talc', formula: 'Mg₃Si₄O₁₀(OH)₂', hardness: '1', color: 'White, green, gray', luster: 'Waxy', crystal: 'Monoclinic', category: 'Silicate', icon: '🧴' },
-  { name: 'Gypsum', formula: 'CaSO₄·2H₂O', hardness: '2', color: 'Colorless, white, gray', luster: 'Vitreous', crystal: 'Monoclinic', category: 'Sulfate', icon: '🏛️' },
-  { name: 'Sulfur', formula: 'S', hardness: '1.5-2.5', color: 'Bright yellow', luster: 'Resinous', crystal: 'Orthorhombic', category: 'Native Element', icon: '🟡' },
-  { name: 'Halite', formula: 'NaCl', hardness: '2.5', color: 'Colorless, white, pink, blue', luster: 'Vitreous', crystal: 'Cubic', category: 'Halide', icon: '🧂' },
-  { name: 'Azurite', formula: 'Cu₃(CO₃)₂(OH)₂', hardness: '3.5-4', color: 'Deep blue', luster: 'Vitreous', crystal: 'Monoclinic', category: 'Carbonate', icon: '🔵' },
-];
+// Projected from data/minerals.json (the single source of truth shared with the
+// serverless API) onto the compact shape these cards render.
+const MINERALS: MineralData[] = CANONICAL.map((m) => ({
+  name: m.name,
+  formula: m.formula_display,
+  hardness: m.hardness_short,
+  color: m.color_short,
+  luster: m.luster_short,
+  crystal: m.crystal_short,
+  category: m.category,
+  icon: m.icon,
+}));
 
-const CATEGORIES = ['All', 'Silicate', 'Oxide', 'Carbonate', 'Sulfide', 'Halide', 'Phosphate', 'Sulfate', 'Native Element'];
 
 export const MineralCatalog: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');

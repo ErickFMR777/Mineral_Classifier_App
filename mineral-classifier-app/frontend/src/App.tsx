@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { UploadZone } from './components/UploadZone'
 import { ClassificationResult } from './components/ClassificationResult'
@@ -6,7 +6,10 @@ import { LoadingSpinner } from './components/LoadingSpinner'
 import { Navigation } from './components/Navigation'
 import { MineralCatalog } from './components/MineralCatalog'
 import { AboutSection } from './components/AboutSection'
+import { ModelStatusBar } from './components/ModelStatusBar'
 import { classifyMineral } from './api/client'
+import { onProgress, onStatus, preloadModel } from './ml/engine'
+import type { EngineStatus, ModelLoadProgress } from './ml/engine'
 import { ClassificationResult as IClassificationResult } from './types'
 import './styles/globals.css'
 
@@ -16,7 +19,21 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [activeSection, setActiveSection] = useState('classifier')
+  const [modelStatus, setModelStatus] = useState<EngineStatus>('idle')
+  const [modelProgress, setModelProgress] = useState<ModelLoadProgress | null>(null)
   const mainRef = useRef<HTMLDivElement>(null)
+
+  // Start pulling the CLIP weights immediately so the download overlaps with
+  // the user picking a photo instead of stalling the first classification.
+  useEffect(() => {
+    const offProgress = onProgress(setModelProgress)
+    const offStatus = onStatus((status) => setModelStatus(status))
+    preloadModel()
+    return () => {
+      offProgress()
+      offStatus()
+    }
+  }, [])
 
   const handleImageSelected = (file: File) => {
     setImage(file)
@@ -76,7 +93,7 @@ function App() {
                   <div className="relative z-10 max-w-2xl">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/15 backdrop-blur-sm rounded-full text-xs font-medium mb-6">
                       <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-                      ResNet-50 · 30 Mineral Classes · Transfer Learning
+                      CLIP ViT-B/32 · 30 Mineral Classes · Runs in your browser
                     </div>
                     <h1 className="text-4xl sm:text-5xl font-black mb-4 leading-tight">
                       AI Mineral<br />Identification
@@ -101,14 +118,16 @@ function App() {
                     <p className="text-sm text-gray-500 ml-11">Drag & drop or click to select a mineral photo for classification</p>
                   </div>
 
-                  <div className="p-6 sm:p-8">
+                  <div className="p-6 sm:p-8 space-y-6">
+                    <ModelStatusBar status={modelStatus} progress={modelProgress} />
+
                     <UploadZone
                       onImageSelected={handleImageSelected}
                       isLoading={loading}
                     />
 
                     {image && (
-                      <div className="mt-6">
+                      <div>
                         <button
                           onClick={handleClassify}
                           disabled={loading}
@@ -203,8 +222,8 @@ function App() {
                           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                         </svg>
                       </div>
-                      <h3 className="font-bold text-gray-900 mb-1">Instant Results</h3>
-                      <p className="text-sm text-gray-500">Deep learning inference in under 2 seconds with confidence scores and alternative matches.</p>
+                      <h3 className="font-bold text-gray-900 mb-1">Private by Design</h3>
+                      <p className="text-sm text-gray-500">Inference runs on your own device. Photos are never uploaded, and the app works offline once the model is cached.</p>
                     </div>
 
                     <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-md hover:border-violet-200 transition-all">
@@ -267,9 +286,9 @@ function App() {
             <div className="flex items-center gap-6 text-xs text-gray-400">
               <span>30 Mineral Types</span>
               <span className="hidden sm:inline">·</span>
-              <span>React + FastAPI + PyTorch</span>
+              <span>React + TypeScript + ONNX Runtime</span>
               <span className="hidden sm:inline">·</span>
-              <span>ResNet-50 CNN</span>
+              <span>CLIP ViT-B/32</span>
             </div>
           </div>
         </div>

@@ -6,14 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:embeddings": "node scripts/build-text-embeddings.mjs"
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "axios": "^1.6.2",
     "react-dropzone": "^14.2.3",
-    "framer-motion": "^10.16.4"
+    "framer-motion": "^10.16.4",
+    "@huggingface/transformers": "^3.7.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",

@@ -1,0 +1,1140 @@
+[
+  {
+    "id": 1,
+    "name": "Quartz",
+    "category": "Silicate",
+    "icon": "🔮",
+    "chemical_formula": "SiO2",
+    "formula_display": "SiO₂",
+    "hardness": "7 (Mohs scale)",
+    "hardness_short": "7",
+    "color": "Colorless, white, gray, pink, purple, brown",
+    "color_short": "Colorless, white, purple, pink",
+    "luster": "Vitreous",
+    "luster_short": "Vitreous",
+    "crystal_system": "Hexagonal (Trigonal)",
+    "crystal_short": "Hexagonal",
+    "density": "2.65 g/cm³",
+    "streak": "White",
+    "cleavage": "None (conchoidal fracture)",
+    "formation": [
+      "Crystallizes from cooling magma",
+      "Forms from accumulated sand grains",
+      "Created under high temperature and pressure"
+    ],
+    "occurrence": [
+      "Mountain peaks and granite formations",
+      "Beach sand and desert dunes",
+      "Sandstone and quartzite layers",
+      "Veins in metamorphic rocks"
+    ],
+    "uses": [
+      "Gemstones (amethyst, rose quartz, citrine)",
+      "Electronics (quartz oscillators in clocks)",
+      "Glass production and fiber optics",
+      "Abrasive material (sandpaper, grinding wheels)",
+      "Construction aggregate and decorative stone"
+    ],
+    "description": "Quartz is the most abundant mineral in Earth's continental crust, composed of silicon dioxide (SiO2). It occurs in various colors including purple amethyst, pink rose quartz, and clear rock crystal. Due to its hardness, piezoelectric properties, and availability, quartz is one of the most economically important minerals worldwide."
+  },
+  {
+    "id": 2,
+    "name": "Feldspar",
+    "category": "Silicate",
+    "icon": "🪨",
+    "chemical_formula": "KAlSi3O8 - NaAlSi3O8 - CaAl2Si2O8",
+    "formula_display": "KAlSi₃O₈",
+    "hardness": "6-6.5 (Mohs scale)",
+    "hardness_short": "6-6.5",
+    "color": "White, pink, blue, yellow, gray",
+    "color_short": "White, pink, blue, gray",
+    "luster": "Vitreous to pearly",
+    "luster_short": "Vitreous",
+    "crystal_system": "Triclinic, Monoclinic",
+    "crystal_short": "Triclinic",
+    "density": "2.55-2.76 g/cm³",
+    "streak": "White",
+    "cleavage": "Perfect in two directions",
+    "formation": [
+      "Primary mineral in igneous rocks",
+      "Forms from magma crystallization",
+      "Alters from high-temperature minerals"
+    ],
+    "occurrence": [
+      "Granites and pegmatites",
+      "Sandstones and metamorphic rocks",
+      "Lunar rocks and meteorites"
+    ],
+    "uses": [
+      "Glass and ceramic production",
+      "Abrasive material and fillers",
+      "Porcelain and pottery manufacturing",
+      "Construction stone",
+      "Gemstones (moonstone, labradorite)"
+    ],
+    "description": "Feldspars are the most abundant minerals in the Earth's crust, comprising about 60% of crustal rocks. They are essential minerals in igneous rocks and form the basis of the Bowen's reaction series in magmatic evolution."
+  },
+  {
+    "id": 3,
+    "name": "Mica",
+    "category": "Silicate",
+    "icon": "✨",
+    "chemical_formula": "KAl2(AlSi3O10)(OH)2",
+    "formula_display": "KAl₂(AlSi₃O₁₀)(OH)₂",
+    "hardness": "2.5-3 (Mohs scale)",
+    "hardness_short": "2.5-3",
+    "color": "Silver, brown, black, green, violet",
+    "color_short": "Silver, brown, black",
+    "luster": "Vitreous to pearly",
+    "luster_short": "Pearly",
+    "crystal_system": "Monoclinic",
+    "crystal_short": "Monoclinic",
+    "density": "2.77-3.10 g/cm³",
+    "streak": "White",
+    "cleavage": "Perfect basal cleavage (sheets)",
+    "formation": [
+      "Crystallizes in igneous and metamorphic rocks",
+      "Forms from hydrothermal alteration",
+      "Grows in pegmatite veins"
+    ],
+    "occurrence": [
+      "Granite and pegmatite formations",
+      "Schist and gneiss (metamorphic rocks)",
+      "Sedimentary deposits from weathering"
+    ],
+    "uses": [
+      "Electrical insulation in electronics",
+      "Heat-resistant windows and furnace screens",
+      "Cosmetics and paint pigments",
+      "Construction materials and wallboard",
+      "Lubricant in industrial processes"
+    ],
+    "description": "Mica is a group of sheet silicate minerals known for their perfect basal cleavage, allowing them to be split into thin, flexible, transparent sheets. The two most common varieties are muscovite (light mica) and biotite (dark mica)."
+  },
+  {
+    "id": 4,
+    "name": "Calcite",
+    "category": "Carbonate",
+    "icon": "🤍",
+    "chemical_formula": "CaCO3",
+    "formula_display": "CaCO₃",
+    "hardness": "3 (Mohs scale)",
+    "hardness_short": "3",
+    "color": "Colorless, white, yellow, pink, blue, green",
+    "color_short": "Colorless, white, yellow",
+    "luster": "Vitreous to dull",
+    "luster_short": "Vitreous",
+    "crystal_system": "Hexagonal (Trigonal)",
+    "crystal_short": "Hexagonal",
+    "density": "2.71 g/cm³",
+    "streak": "White",
+    "cleavage": "Perfect rhombic",
+    "formation": [
+      "Biological: from shells and coral skeletons",
+      "Chemical: from seawater precipitation",
+      "Metamorphic: from limestone heating"
+    ],
+    "occurrence": [
+      "Limestone and chalk formations",
+      "Marble (metamorphic limestone)",
+      "Stalactites and stalagmites in caves",
+      "Shells and coral reefs"
+    ],
+    "uses": [
+      "Cement and concrete production",
+      "Building and decorative stone",
+      "Agricultural lime and soil amendment",
+      "Pharmaceutical (calcium supplements)",
+      "Industrial filler and abrasive"
+    ],
+    "description": "Calcite is a calcium carbonate mineral that is incredibly common and economically important. It forms the primary constituent of limestone, marble, and chalk. Calcite exhibits birefringence (double refraction) and perfect rhombic cleavage."
+  },
+  {
+    "id": 5,
+    "name": "Hematite",
+    "category": "Oxide",
+    "icon": "🔴",
+    "chemical_formula": "Fe2O3",
+    "formula_display": "Fe₂O₃",
+    "hardness": "5.5-6.5 (Mohs scale)",
+    "hardness_short": "5.5-6.5",
+    "color": "Red, gray, black, brown",
+    "color_short": "Red, gray, black",
+    "luster": "Metallic to earthy",
+    "luster_short": "Metallic",
+    "crystal_system": "Hexagonal (Trigonal)",
+    "crystal_short": "Hexagonal",
+    "density": "5.26 g/cm³",
+    "streak": "Red to dark red",
+    "cleavage": "None (parting along basal plane)",
+    "formation": [
+      "Forms in low-temperature hydrothermal solutions",
+      "Oxidation of iron minerals",
+      "Direct crystallization from magma"
+    ],
+    "occurrence": [
+      "Banded iron formations (major ore)",
+      "Sedimentary rocks",
+      "Hydrothermal veins",
+      "Igneous rocks"
+    ],
+    "uses": [
+      "Primary iron ore (70% of world's iron)",
+      "Red pigment and paint",
+      "Polishing compound",
+      "Decorative and gemstone material",
+      "Medical applications (iron supplements)"
+    ],
+    "description": "Hematite is the most important iron ore mineral, accounting for the majority of iron production worldwide. It exhibits metallic luster when fresh and is known for its deep red color in fine powder form."
+  },
+  {
+    "id": 6,
+    "name": "Magnetite",
+    "category": "Oxide",
+    "icon": "🧲",
+    "chemical_formula": "Fe3O4",
+    "formula_display": "Fe₃O₄",
+    "hardness": "5.5-6.5 (Mohs scale)",
+    "hardness_short": "5.5-6.5",
+    "color": "Black, dark gray",
+    "color_short": "Black",
+    "luster": "Metallic",
+    "luster_short": "Metallic",
+    "crystal_system": "Cubic (Isometric)",
+    "crystal_short": "Cubic",
+    "density": "5.18 g/cm³",
+    "streak": "Black",
+    "cleavage": "None (parting on octahedral planes)",
+    "formation": [
+      "Crystallizes from iron-rich magmas",
+      "Forms in metamorphic environments",
+      "Precipitates from hydrothermal fluids"
+    ],
+    "occurrence": [
+      "Igneous rocks (basalt, gabbro)",
+      "Metamorphic rocks (schist)",
+      "Black sand beaches",
+      "Banded iron formations"
+    ],
+    "uses": [
+      "Iron ore for steel production",
+      "Magnetic recording media",
+      "Heavy media separation in mining",
+      "Water purification",
+      "Biomedical applications (MRI contrast)"
+    ],
+    "description": "Magnetite is a naturally magnetic iron oxide mineral and the most magnetic of all naturally occurring minerals. It was the first material used to create compasses and is an important ore of iron."
+  },
+  {
+    "id": 7,
+    "name": "Galena",
+    "category": "Sulfide",
+    "icon": "⬛",
+    "chemical_formula": "PbS",
+    "formula_display": "PbS",
+    "hardness": "2.5 (Mohs scale)",
+    "hardness_short": "2.5",
+    "color": "Lead gray, silvery",
+    "color_short": "Lead gray",
+    "luster": "Metallic",
+    "luster_short": "Metallic",
+    "crystal_system": "Cubic (Isometric)",
+    "crystal_short": "Cubic",
+    "density": "7.58 g/cm³",
+    "streak": "Lead gray to black",
+    "cleavage": "Perfect cubic",
+    "formation": [
+      "Forms in hydrothermal veins",
+      "Precipitates from hot mineral-rich solutions",
+      "Associated with zinc and silver ores"
+    ],
+    "occurrence": [
+      "Hydrothermal sulfide veins",
+      "Sediment-hosted deposits",
+      "Mississippi Valley-type deposits",
+      "Carbonate replacement deposits"
+    ],
+    "uses": [
+      "Primary lead ore (over 80% of lead production)",
+      "Silver extraction (often contains silver)",
+      "Historical use in early crystal radios",
+      "Lead-acid batteries (from extracted lead)",
+      "Radiation shielding"
+    ],
+    "description": "Galena is the most important lead ore mineral, with distinctive cubic crystals and perfect cubic cleavage. It has a characteristic bright metallic luster on fresh surfaces and often contains significant amounts of silver as an impurity."
+  },
+  {
+    "id": 8,
+    "name": "Pyrite",
+    "category": "Sulfide",
+    "icon": "🌟",
+    "chemical_formula": "FeS2",
+    "formula_display": "FeS₂",
+    "hardness": "6-6.5 (Mohs scale)",
+    "hardness_short": "6-6.5",
+    "color": "Brass yellow, pale gold",
+    "color_short": "Brass yellow",
+    "luster": "Metallic",
+    "luster_short": "Metallic",
+    "crystal_system": "Cubic (Isometric)",
+    "crystal_short": "Cubic",
+    "density": "5.01 g/cm³",
+    "streak": "Greenish-black to brownish-black",
+    "cleavage": "Poor (conchoidal fracture)",
+    "formation": [
+      "Forms in hydrothermal veins at various temperatures",
+      "Precipitates in sedimentary environments",
+      "Crystallizes from sulfur-rich fluids"
+    ],
+    "occurrence": [
+      "Hydrothermal veins",
+      "Sedimentary rocks (shale, coal)",
+      "Metamorphic rocks",
+      "Associated with gold deposits"
+    ],
+    "uses": [
+      "Sulfuric acid production",
+      "Source of iron and sulfur",
+      "Gemstone and jewelry (marcasite jewelry)",
+      "Fire-starting (flint and steel substitute)",
+      "Indicator mineral in gold exploration"
+    ],
+    "description": "Pyrite, commonly known as 'fool's gold' due to its superficial resemblance to gold, is an iron sulfide mineral. It is the most common sulfide mineral and is found in virtually all geological environments."
+  },
+  {
+    "id": 9,
+    "name": "Chalcopyrite",
+    "category": "Sulfide",
+    "icon": "🟡",
+    "chemical_formula": "CuFeS2",
+    "formula_display": "CuFeS₂",
+    "hardness": "3.5-4 (Mohs scale)",
+    "hardness_short": "3.5-4",
+    "color": "Brass yellow, golden, iridescent tarnish",
+    "color_short": "Brass yellow, iridescent",
+    "luster": "Metallic",
+    "luster_short": "Metallic",
+    "crystal_system": "Tetragonal",
+    "crystal_short": "Tetragonal",
+    "density": "4.19 g/cm³",
+    "streak": "Greenish-black",
+    "cleavage": "Poor",
+    "formation": [
+      "Forms in hydrothermal sulfide veins",
+      "Crystallizes from copper-rich magmatic fluids",
+      "Precipitates in porphyry copper deposits"
+    ],
+    "occurrence": [
+      "Porphyry copper deposits (largest source)",
+      "Hydrothermal veins",
+      "Sediment-hosted stratiform deposits",
+      "Volcanogenic massive sulfide deposits"
+    ],
+    "uses": [
+      "Primary copper ore (most important copper mineral)",
+      "Electrical wiring (from extracted copper)",
+      "Plumbing and construction materials",
+      "Bronze and brass alloy production",
+      "Semiconductor industry"
+    ],
+    "description": "Chalcopyrite is the most important copper ore mineral, providing the majority of the world's copper production. It is often confused with pyrite but is softer and has a more golden color with characteristic iridescent tarnish."
+  },
+  {
+    "id": 10,
+    "name": "Malachite",
+    "category": "Carbonate",
+    "icon": "💚",
+    "chemical_formula": "Cu2CO3(OH)2",
+    "formula_display": "Cu₂CO₃(OH)₂",
+    "hardness": "3.5-4 (Mohs scale)",
+    "hardness_short": "3.5-4",
+    "color": "Bright green, dark green, banded",
+    "color_short": "Green (banded)",
+    "luster": "Vitreous to silky",
+    "luster_short": "Vitreous",
+    "crystal_system": "Monoclinic",
+    "crystal_short": "Monoclinic",
+    "density": "3.60-4.05 g/cm³",
+    "streak": "Light green",
+    "cleavage": "Perfect in one direction",
+    "formation": [
+      "Forms from copper sulfide oxidation",
+      "Precipitates near copper ore deposits",
+      "Created by weathering of copper minerals"
+    ],
+    "occurrence": [
+      "Oxidation zones of copper deposits",
+      "Limestone caves near copper ores",
+      "Democratic Republic of Congo",
+      "Ural Mountains, Russia"
+    ],
+    "uses": [
+      "Ornamental and decorative stone",
+      "Jewelry and carved objects",
+      "Historical copper ore",
+      "Green pigment (Egyptian and Renaissance art)",
+      "Collector specimens"
+    ],
+    "description": "Malachite is a striking green copper carbonate mineral known for its distinctive banded patterns. It has been used as a pigment and ornamental stone for thousands of years and was one of the first ores used to produce copper metal."
+  },
+  {
+    "id": 11,
+    "name": "Limonite",
+    "category": "Oxide",
+    "icon": "🟫",
+    "chemical_formula": "FeO(OH)·nH2O",
+    "formula_display": "FeO(OH)·nH₂O",
+    "hardness": "4-5.5 (Mohs scale)",
+    "hardness_short": "4-5.5",
+    "color": "Yellow-brown, dark brown, black",
+    "color_short": "Yellow-brown",
+    "luster": "Earthy to submetallic",
+    "luster_short": "Earthy",
+    "crystal_system": "Amorphous",
+    "crystal_short": "Amorphous",
+    "density": "2.70-4.30 g/cm³",
+    "streak": "Yellowish-brown",
+    "cleavage": "None",
+    "formation": [
+      "Weathering product of iron-bearing minerals",
+      "Precipitates from iron-rich groundwater",
+      "Forms in bog and marsh environments"
+    ],
+    "occurrence": [
+      "Surface weathering zones",
+      "Bog iron deposits",
+      "Tropical laterite soils",
+      "Gossan (oxidized caps of ore bodies)"
+    ],
+    "uses": [
+      "Iron ore (historically important)",
+      "Yellow-brown pigment (ochre)",
+      "Natural water filtration",
+      "Soil conditioner",
+      "Historical paint pigment"
+    ],
+    "description": "Limonite is an iron oxyhydroxide mineral mixture that forms the characteristic yellow-brown 'rust' color seen on weathered iron-bearing rocks. It is technically a mineraloid rather than a true mineral."
+  },
+  {
+    "id": 12,
+    "name": "Bauxite",
+    "category": "Oxide",
+    "icon": "🧱",
+    "chemical_formula": "AlO(OH) / Al(OH)3",
+    "formula_display": "AlO(OH)",
+    "hardness": "1-3 (Mohs scale)",
+    "hardness_short": "1-3",
+    "color": "Red-brown, white, yellow, gray",
+    "color_short": "Red-brown, white",
+    "luster": "Earthy to dull",
+    "luster_short": "Earthy",
+    "crystal_system": "Amorphous (mixture)",
+    "crystal_short": "Amorphous",
+    "density": "2.00-2.55 g/cm³",
+    "streak": "White to reddish",
+    "cleavage": "None",
+    "formation": [
+      "Deep tropical weathering of aluminum-rich rocks",
+      "Laterization process in hot, humid climates",
+      "Leaching of silica from parent rocks"
+    ],
+    "occurrence": [
+      "Tropical and subtropical regions",
+      "Australia, Guinea, Brazil, Jamaica",
+      "Laterite soil formations",
+      "Near-surface deposits"
+    ],
+    "uses": [
+      "Primary aluminum ore (virtually all aluminum)",
+      "Refractory materials",
+      "Abrasive (aluminum oxide)",
+      "Cement production",
+      "Chemical industry (aluminum compounds)"
+    ],
+    "description": "Bauxite is the primary ore of aluminum and is actually a mixture of aluminum hydroxide minerals. It forms through intense tropical weathering of aluminum-rich rocks and is critical for aluminum production via the Bayer process."
+  },
+  {
+    "id": 13,
+    "name": "Corundum",
+    "category": "Oxide",
+    "icon": "💎",
+    "chemical_formula": "Al2O3",
+    "formula_display": "Al₂O₃",
+    "hardness": "9 (Mohs scale)",
+    "hardness_short": "9",
+    "color": "Red (ruby), blue (sapphire), colorless, yellow, pink",
+    "color_short": "Red (ruby), blue (sapphire)",
+    "luster": "Vitreous to adamantine",
+    "luster_short": "Adamantine",
+    "crystal_system": "Hexagonal (Trigonal)",
+    "crystal_short": "Hexagonal",
+    "density": "3.98-4.10 g/cm³",
+    "streak": "White",
+    "cleavage": "None (parting on basal and rhombohedral planes)",
+    "formation": [
+      "Crystallizes from aluminum-rich magmas",
+      "Forms in contact metamorphic environments",
+      "Develops in silica-poor igneous rocks"
+    ],
+    "occurrence": [
+      "Metamorphic rocks (marble, gneiss)",
+      "Alluvial deposits (gem gravels)",
+      "Myanmar, Sri Lanka, Madagascar",
+      "Kashmir, Thailand, Australia"
+    ],
+    "uses": [
+      "Precious gemstones (ruby and sapphire)",
+      "Industrial abrasive (emery, sandpaper)",
+      "Watch bearings and scientific instruments",
+      "Laser components (ruby laser)",
+      "Scratch-resistant watch crystals"
+    ],
+    "description": "Corundum is the second hardest natural mineral (after diamond) and includes the precious gem varieties ruby (red) and sapphire (all other colors). Its exceptional hardness makes it invaluable as both a gemstone and an industrial abrasive."
+  },
+  {
+    "id": 14,
+    "name": "Diamond",
+    "category": "Native Element",
+    "icon": "💠",
+    "chemical_formula": "C",
+    "formula_display": "C",
+    "hardness": "10 (Mohs scale)",
+    "hardness_short": "10",
+    "color": "Colorless, yellow, brown, blue, pink, green",
+    "color_short": "Colorless, yellow, blue",
+    "luster": "Adamantine",
+    "luster_short": "Adamantine",
+    "crystal_system": "Cubic (Isometric)",
+    "crystal_short": "Cubic",
+    "density": "3.52 g/cm³",
+    "streak": "None (too hard to streak)",
+    "cleavage": "Perfect octahedral",
+    "formation": [
+      "Crystallizes at extreme pressure (150+ km depth)",
+      "Forms in Earth's mantle at 1000-1300°C",
+      "Brought to surface by kimberlite eruptions"
+    ],
+    "occurrence": [
+      "Kimberlite pipes (primary deposits)",
+      "Alluvial river and beach deposits",
+      "South Africa, Botswana, Russia, Canada",
+      "Australia, Democratic Republic of Congo"
+    ],
+    "uses": [
+      "Precious gemstone (engagement rings, jewelry)",
+      "Industrial cutting and drilling tools",
+      "Polishing and grinding compounds",
+      "High-precision surgical scalpels",
+      "Semiconductor and electronics research"
+    ],
+    "description": "Diamond is the hardest known natural material, composed of carbon atoms arranged in a crystal structure. Formed deep within Earth's mantle under extreme pressure and temperature, diamonds are prized both as gemstones and industrial tools."
+  },
+  {
+    "id": 15,
+    "name": "Graphite",
+    "category": "Native Element",
+    "icon": "✏️",
+    "chemical_formula": "C",
+    "formula_display": "C",
+    "hardness": "1-2 (Mohs scale)",
+    "hardness_short": "1-2",
+    "color": "Steel gray, black",
+    "color_short": "Steel gray, black",
+    "luster": "Metallic, earthy",
+    "luster_short": "Metallic,",
+    "crystal_system": "Hexagonal",
+    "crystal_short": "Hexagonal",
+    "density": "2.09-2.23 g/cm³",
+    "streak": "Black to dark gray",
+    "cleavage": "Perfect basal (flaky)",
+    "formation": [
+      "Metamorphism of organic carbon in sediments",
+      "Reduction of carbon compounds at high temperature",
+      "Crystallizes from carbon-rich fluids"
+    ],
+    "occurrence": [
+      "Metamorphic rocks (schist, gneiss, marble)",
+      "Igneous rocks (pegmatites)",
+      "China, India, Brazil, Canada",
+      "Sri Lanka, Madagascar"
+    ],
+    "uses": [
+      "Pencil lead (writing instruments)",
+      "Lubricant (dry and wet applications)",
+      "Batteries (lithium-ion anode material)",
+      "Steel and foundry industries",
+      "Nuclear reactor moderators"
+    ],
+    "description": "Graphite is a soft, dark mineral composed of carbon—the same element as diamond but with a completely different crystal structure. Its layered structure gives it unique properties including extreme softness, lubricity, and electrical conductivity."
+  },
+  {
+    "id": 16,
+    "name": "Olivine",
+    "category": "Silicate",
+    "icon": "🫒",
+    "chemical_formula": "(Mg,Fe)2SiO4",
+    "formula_display": "(Mg,Fe)₂SiO₄",
+    "hardness": "6.5-7 (Mohs scale)",
+    "hardness_short": "6.5-7",
+    "color": "Green, yellow-green, olive green",
+    "color_short": "Green, yellow-green",
+    "luster": "Vitreous",
+    "luster_short": "Vitreous",
+    "crystal_system": "Orthorhombic",
+    "crystal_short": "Orthorhombic",
+    "density": "3.22-4.39 g/cm³",
+    "streak": "White",
+    "cleavage": "Poor",
+    "formation": [
+      "Crystallizes from mafic and ultramafic magmas",
+      "First mineral to crystallize from basaltic melt",
+      "Forms in Earth's upper mantle"
+    ],
+    "occurrence": [
+      "Basalt and gabbro (mafic igneous rocks)",
+      "Peridotite (Earth's mantle rock)",
+      "Volcanic beaches (Hawaii green sand)",
+      "Meteorites (pallasites)"
+    ],
+    "uses": [
+      "Gemstone (peridot)",
+      "Refractory materials in steel foundries",
+      "Carbon dioxide sequestration research",
+      "Sandblasting abrasive",
+      "Mineral specimen collecting"
+    ],
+    "description": "Olivine is a green silicate mineral that is one of the most common minerals in Earth's upper mantle. The gem variety, peridot, has been valued since ancient Egyptian times. Olivine is significant in understanding volcanic processes and mantle composition."
+  },
+  {
+    "id": 17,
+    "name": "Amphibole",
+    "category": "Silicate",
+    "icon": "🌑",
+    "chemical_formula": "Ca2Mg5(Si8O22)(OH)2",
+    "formula_display": "Ca₂Mg₅(Si₈O₂₂)(OH)₂",
+    "hardness": "5-6 (Mohs scale)",
+    "hardness_short": "5-6",
+    "color": "Dark green, black, brown",
+    "color_short": "Dark green, black",
+    "luster": "Vitreous to silky",
+    "luster_short": "Vitreous",
+    "crystal_system": "Monoclinic",
+    "crystal_short": "Monoclinic",
+    "density": "2.90-3.60 g/cm³",
+    "streak": "White to pale green",
+    "cleavage": "Perfect at 56° and 124°",
+    "formation": [
+      "Crystallizes from intermediate to mafic magmas",
+      "Forms in metamorphic environments",
+      "Develops from hydration of pyroxene"
+    ],
+    "occurrence": [
+      "Igneous rocks (diorite, andesite)",
+      "Metamorphic rocks (amphibolite, schist)",
+      "Hydrothermal deposits",
+      "Worldwide distribution"
+    ],
+    "uses": [
+      "Rock identification (diagnostic mineral)",
+      "Geological mapping indicator",
+      "Dimension stone and building material",
+      "Historical asbestos source (now banned)",
+      "Research in petrology and mineralogy"
+    ],
+    "description": "Amphiboles are a group of dark-colored, double-chain silicate minerals common in igneous and metamorphic rocks. They are distinguished from pyroxenes by their 56°/124° cleavage angles and are important indicators of rock formation conditions."
+  },
+  {
+    "id": 18,
+    "name": "Pyroxene",
+    "category": "Silicate",
+    "icon": "🌿",
+    "chemical_formula": "MgSiO3 / CaMgSi2O6",
+    "formula_display": "MgSiO₃",
+    "hardness": "5-6 (Mohs scale)",
+    "hardness_short": "5-6",
+    "color": "Dark green, black, brown, greenish-black",
+    "color_short": "Dark green, black",
+    "luster": "Vitreous to dull",
+    "luster_short": "Vitreous",
+    "crystal_system": "Monoclinic, Orthorhombic",
+    "crystal_short": "Monoclinic",
+    "density": "3.10-3.60 g/cm³",
+    "streak": "White to light green",
+    "cleavage": "Good at nearly 90°",
+    "formation": [
+      "Crystallizes from mafic magmas at high temperatures",
+      "Forms in metamorphic rocks under high pressure",
+      "Develops in ultramafic igneous environments"
+    ],
+    "occurrence": [
+      "Basalt, gabbro, and peridotite",
+      "Granulite facies metamorphic rocks",
+      "Lunar rocks and meteorites",
+      "Worldwide in mafic igneous rocks"
+    ],
+    "uses": [
+      "Gemstone (diopside, jadeite/jade)",
+      "Geological indicator mineral",
+      "Research in planetary geology",
+      "Ceramic and refractory materials",
+      "Collectors and museum specimens"
+    ],
+    "description": "Pyroxenes are single-chain silicate minerals that are essential components of mafic and ultramafic igneous rocks. They are distinguished from amphiboles by their nearly 90° cleavage angles and are crucial for understanding magmatic processes."
+  },
+  {
+    "id": 19,
+    "name": "Fluorite",
+    "category": "Halide",
+    "icon": "🟣",
+    "chemical_formula": "CaF2",
+    "formula_display": "CaF₂",
+    "hardness": "4 (Mohs scale)",
+    "hardness_short": "4",
+    "color": "Purple, blue, green, yellow, colorless, pink",
+    "color_short": "Purple, blue, green, yellow",
+    "luster": "Vitreous",
+    "luster_short": "Vitreous",
+    "crystal_system": "Cubic (Isometric)",
+    "crystal_short": "Cubic",
+    "density": "3.13 g/cm³",
+    "streak": "White",
+    "cleavage": "Perfect octahedral",
+    "formation": [
+      "Precipitates from hydrothermal fluids",
+      "Forms in limestone replacement deposits",
+      "Crystallizes in granite pegmatites"
+    ],
+    "occurrence": [
+      "Hydrothermal veins",
+      "Limestone replacement deposits",
+      "Hot spring deposits",
+      "China, Mexico, South Africa, Mongolia"
+    ],
+    "uses": [
+      "Fluorine chemical production (HF acid)",
+      "Flux in steel and aluminum smelting",
+      "Optical lenses (UV and IR transparency)",
+      "Gemstone and collectors mineral",
+      "Toothpaste fluoride source"
+    ],
+    "description": "Fluorite is a highly colorful mineral known for its perfect octahedral cleavage and wide range of colors. It is the defining mineral for hardness 4 on the Mohs scale and often exhibits fluorescence under ultraviolet light—a property named after this mineral."
+  },
+  {
+    "id": 20,
+    "name": "Apatite",
+    "category": "Phosphate",
+    "icon": "🦴",
+    "chemical_formula": "Ca5(PO4)3(F,Cl,OH)",
+    "formula_display": "Ca₅(PO₄)₃(F,Cl,OH)",
+    "hardness": "5 (Mohs scale)",
+    "hardness_short": "5",
+    "color": "Green, blue, yellow, purple, colorless",
+    "color_short": "Green, blue, yellow",
+    "luster": "Vitreous to subresinous",
+    "luster_short": "Vitreous",
+    "crystal_system": "Hexagonal",
+    "crystal_short": "Hexagonal",
+    "density": "3.16-3.22 g/cm³",
+    "streak": "White",
+    "cleavage": "Poor",
+    "formation": [
+      "Crystallizes from phosphorus-rich magmas",
+      "Forms in sedimentary phosphorite deposits",
+      "Develops in metamorphic environments"
+    ],
+    "occurrence": [
+      "Igneous rocks (pegmatites, carbonatites)",
+      "Sedimentary phosphorite deposits",
+      "Metamorphic rocks",
+      "Biological (bones and teeth)"
+    ],
+    "uses": [
+      "Phosphate fertilizer production",
+      "Source of phosphoric acid",
+      "Animal feed supplements",
+      "Gemstone (rare, collector's item)",
+      "Biological research (bone mineral analog)"
+    ],
+    "description": "Apatite is a group of phosphate minerals and the defining mineral for hardness 5 on the Mohs scale. It is the primary source of phosphorus for fertilizer production and is a key component of bones and teeth in biological systems."
+  },
+  {
+    "id": 21,
+    "name": "Tourmaline",
+    "category": "Silicate",
+    "icon": "🌈",
+    "chemical_formula": "(Na,Ca)(Al,Fe,Li,Mg,Mn)3(Al,Cr,Fe,V)6(BO3)3(Si6O18)(OH)4",
+    "formula_display": "Complex Borosilicate",
+    "hardness": "7-7.5 (Mohs scale)",
+    "hardness_short": "7-7.5",
+    "color": "Black, green, pink, blue, red, watermelon (multicolor)",
+    "color_short": "Black, green, pink, blue",
+    "luster": "Vitreous",
+    "luster_short": "Vitreous",
+    "crystal_system": "Hexagonal (Trigonal)",
+    "crystal_short": "Hexagonal",
+    "density": "3.02-3.26 g/cm³",
+    "streak": "White",
+    "cleavage": "None (conchoidal fracture)",
+    "formation": [
+      "Crystallizes in granite pegmatites",
+      "Forms in metamorphic rocks",
+      "Develops from boron-rich hydrothermal fluids"
+    ],
+    "occurrence": [
+      "Granite pegmatites",
+      "Metamorphic rocks (schist)",
+      "Brazil, Afghanistan, Nigeria, Mozambique",
+      "Maine and California, USA"
+    ],
+    "uses": [
+      "Precious and semi-precious gemstones",
+      "Piezoelectric applications",
+      "Pressure gauges and sensors",
+      "Jewelry (wide color variety)",
+      "Mineral specimen collecting"
+    ],
+    "description": "Tourmaline is a complex borosilicate mineral group known for its extraordinary range of colors. Some crystals exhibit multiple colors (watermelon tourmaline). It displays piezoelectric and pyroelectric properties."
+  },
+  {
+    "id": 22,
+    "name": "Beryl",
+    "category": "Silicate",
+    "icon": "🟢",
+    "chemical_formula": "Be3Al2Si6O18",
+    "formula_display": "Be₃Al₂Si₆O₁₈",
+    "hardness": "7.5-8 (Mohs scale)",
+    "hardness_short": "7.5-8",
+    "color": "Green (emerald), blue (aquamarine), yellow, pink, colorless",
+    "color_short": "Green (emerald), blue (aquamarine)",
+    "luster": "Vitreous",
+    "luster_short": "Vitreous",
+    "crystal_system": "Hexagonal",
+    "crystal_short": "Hexagonal",
+    "density": "2.63-2.92 g/cm³",
+    "streak": "White",
+    "cleavage": "Poor",
+    "formation": [
+      "Crystallizes in granite pegmatites",
+      "Forms in hydrothermal veins",
+      "Develops in mica schists with beryllium"
+    ],
+    "occurrence": [
+      "Granite pegmatites",
+      "Colombia (emeralds), Brazil (aquamarines)",
+      "Zambia, Zimbabwe, Afghanistan",
+      "Ural Mountains, Russia"
+    ],
+    "uses": [
+      "Precious gemstones (emerald, aquamarine)",
+      "Beryllium metal extraction",
+      "Aerospace alloys (beryllium-copper)",
+      "X-ray tube windows",
+      "Nuclear reactor components"
+    ],
+    "description": "Beryl is a beryllium aluminum silicate mineral that includes some of the most valuable gemstone varieties: emerald (green, colored by chromium) and aquamarine (blue). It is also an important source of beryllium metal."
+  },
+  {
+    "id": 23,
+    "name": "Topaz",
+    "category": "Silicate",
+    "icon": "🔶",
+    "chemical_formula": "Al2SiO4(F,OH)2",
+    "formula_display": "Al₂SiO₄(F,OH)₂",
+    "hardness": "8 (Mohs scale)",
+    "hardness_short": "8",
+    "color": "Colorless, blue, yellow, orange, pink, brown",
+    "color_short": "Colorless, blue, yellow, orange",
+    "luster": "Vitreous",
+    "luster_short": "Vitreous",
+    "crystal_system": "Orthorhombic",
+    "crystal_short": "Orthorhombic",
+    "density": "3.49-3.57 g/cm³",
+    "streak": "White",
+    "cleavage": "Perfect basal",
+    "formation": [
+      "Crystallizes in granite pegmatites",
+      "Forms from fluorine-rich hydrothermal fluids",
+      "Develops in rhyolite cavities"
+    ],
+    "occurrence": [
+      "Pegmatites and greisen deposits",
+      "Rhyolite volcanic rocks",
+      "Brazil, Pakistan, Nigeria, Sri Lanka",
+      "Utah and Colorado, USA"
+    ],
+    "uses": [
+      "Precious and semi-precious gemstone",
+      "Jewelry (especially blue and imperial topaz)",
+      "Defining mineral for Mohs hardness 8",
+      "Collector specimens",
+      "Ornamental carvings"
+    ],
+    "description": "Topaz is a hard, transparent silicate mineral valued as a gemstone. Imperial topaz (orange-pink) from Brazil is the most prized variety. Most blue topaz on the market is produced by irradiating and heating colorless or light-colored natural topaz."
+  },
+  {
+    "id": 24,
+    "name": "Garnet",
+    "category": "Silicate",
+    "icon": "🔴",
+    "chemical_formula": "(Mg,Fe,Mn,Ca)3(Al,Fe,Cr)2(SiO4)3",
+    "formula_display": "(Mg,Fe,Ca)₃Al₂(SiO₄)₃",
+    "hardness": "6.5-7.5 (Mohs scale)",
+    "hardness_short": "6.5-7.5",
+    "color": "Red, orange, yellow, green, purple, brown, black",
+    "color_short": "Red, orange, green",
+    "luster": "Vitreous to resinous",
+    "luster_short": "Vitreous",
+    "crystal_system": "Cubic (Isometric)",
+    "crystal_short": "Cubic",
+    "density": "3.50-4.30 g/cm³",
+    "streak": "White",
+    "cleavage": "None (conchoidal fracture)",
+    "formation": [
+      "Forms in metamorphic rocks under high temperature/pressure",
+      "Crystallizes in igneous pegmatites",
+      "Develops in contact metamorphic zones"
+    ],
+    "occurrence": [
+      "Schist and gneiss (metamorphic rocks)",
+      "Pegmatites and skarns",
+      "Alluvial deposits",
+      "India, Sri Lanka, Tanzania, Madagascar"
+    ],
+    "uses": [
+      "Gemstone (especially almandine and pyrope)",
+      "Industrial abrasive (waterjet cutting)",
+      "Sandblasting media",
+      "Water filtration media",
+      "Geological indicator mineral (P-T conditions)"
+    ],
+    "description": "Garnets are a group of silicate minerals that have been used as gemstones and abrasives since the Bronze Age. They occur in every color except blue and are important indicators of the pressure-temperature conditions under which their host rocks formed."
+  },
+  {
+    "id": 25,
+    "name": "Zircon",
+    "category": "Silicate",
+    "icon": "🔷",
+    "chemical_formula": "ZrSiO4",
+    "formula_display": "ZrSiO₄",
+    "hardness": "7.5 (Mohs scale)",
+    "hardness_short": "7.5",
+    "color": "Colorless, yellow, brown, red, blue, green",
+    "color_short": "Colorless, yellow, brown, blue",
+    "luster": "Vitreous to adamantine",
+    "luster_short": "Adamantine",
+    "crystal_system": "Tetragonal",
+    "crystal_short": "Tetragonal",
+    "density": "4.60-4.70 g/cm³",
+    "streak": "White",
+    "cleavage": "Poor",
+    "formation": [
+      "Crystallizes from silica-rich magmas",
+      "Forms in pegmatites and metamorphic rocks",
+      "Extremely resistant to weathering (survives billions of years)"
+    ],
+    "occurrence": [
+      "Granite and pegmatite",
+      "Alluvial deposits (placer mining)",
+      "Beach sands",
+      "Australia, South Africa, Cambodia"
+    ],
+    "uses": [
+      "Gemstone (natural alternative to diamond)",
+      "Uranium-lead geochronology (dating rocks)",
+      "Zirconium metal production",
+      "Refractory materials (ceramics)",
+      "Nuclear fuel rod cladding"
+    ],
+    "description": "Zircon is one of the oldest minerals on Earth, with some crystals dated to over 4.4 billion years old. It is invaluable for geological age dating using uranium-lead isotope ratios and is also a popular gemstone."
+  },
+  {
+    "id": 26,
+    "name": "Talc",
+    "category": "Silicate",
+    "icon": "🧴",
+    "chemical_formula": "Mg3Si4O10(OH)2",
+    "formula_display": "Mg₃Si₄O₁₀(OH)₂",
+    "hardness": "1 (Mohs scale)",
+    "hardness_short": "1",
+    "color": "White, gray, green, pale blue",
+    "color_short": "White, green, gray",
+    "luster": "Waxy to pearly",
+    "luster_short": "Waxy",
+    "crystal_system": "Monoclinic (Triclinic)",
+    "crystal_short": "Monoclinic",
+    "density": "2.58-2.83 g/cm³",
+    "streak": "White",
+    "cleavage": "Perfect basal",
+    "formation": [
+      "Metamorphism of magnesium-rich minerals",
+      "Hydrothermal alteration of ultramafic rocks",
+      "Low-temperature metamorphism of dolomite"
+    ],
+    "occurrence": [
+      "Ultramafic metamorphic rocks",
+      "Hydrothermal deposits",
+      "China, Brazil, India, USA",
+      "Finland, Australia, France"
+    ],
+    "uses": [
+      "Talcum powder (cosmetics and hygiene)",
+      "Paper manufacturing filler",
+      "Ceramic and paint industry",
+      "Lubricant in food processing",
+      "Roofing materials and rubber filler"
+    ],
+    "description": "Talc is the softest known mineral (Mohs hardness 1), defining the bottom of the Mohs hardness scale. It has a distinctive soapy feel and is composed of hydrated magnesium silicate. Soapstone is a metamorphic rock composed primarily of talc."
+  },
+  {
+    "id": 27,
+    "name": "Gypsum",
+    "category": "Sulfate",
+    "icon": "🏛️",
+    "chemical_formula": "CaSO4·2H2O",
+    "formula_display": "CaSO₄·2H₂O",
+    "hardness": "2 (Mohs scale)",
+    "hardness_short": "2",
+    "color": "Colorless, white, gray, yellow, brown",
+    "color_short": "Colorless, white, gray",
+    "luster": "Vitreous to silky",
+    "luster_short": "Vitreous",
+    "crystal_system": "Monoclinic",
+    "crystal_short": "Monoclinic",
+    "density": "2.31-2.33 g/cm³",
+    "streak": "White",
+    "cleavage": "Perfect in one direction",
+    "formation": [
+      "Evaporation of saline water bodies",
+      "Hydration of anhydrite",
+      "Volcanic fumarole deposits"
+    ],
+    "occurrence": [
+      "Evaporite deposits (ancient sea beds)",
+      "Desert environments",
+      "White Sands, New Mexico, USA",
+      "Worldwide in sedimentary formations"
+    ],
+    "uses": [
+      "Drywall (gypsum board/plasterboard)",
+      "Plaster of Paris (surgical casts, molds)",
+      "Cement additive (retarder)",
+      "Soil conditioner in agriculture",
+      "Chalk for classrooms and sports"
+    ],
+    "description": "Gypsum is a soft sulfate mineral that defines hardness 2 on the Mohs scale. Its most spectacular form is selenite, which can form crystals over 10 meters long (as in Mexico's Cave of Crystals). Gypsum is one of the most widely used industrial minerals."
+  },
+  {
+    "id": 28,
+    "name": "Sulfur",
+    "category": "Native Element",
+    "icon": "🟡",
+    "chemical_formula": "S",
+    "formula_display": "S",
+    "hardness": "1.5-2.5 (Mohs scale)",
+    "hardness_short": "1.5-2.5",
+    "color": "Bright yellow, greenish-yellow",
+    "color_short": "Bright yellow",
+    "luster": "Resinous to greasy",
+    "luster_short": "Resinous",
+    "crystal_system": "Orthorhombic",
+    "crystal_short": "Orthorhombic",
+    "density": "2.07 g/cm³",
+    "streak": "Light yellow",
+    "cleavage": "Poor",
+    "formation": [
+      "Volcanic sublimation around fumaroles",
+      "Bacterial reduction of sulfate minerals",
+      "Evaporite deposits"
+    ],
+    "occurrence": [
+      "Volcanic craters and hot springs",
+      "Salt dome cap rocks",
+      "Evaporite deposits",
+      "Sicily, Japan, Indonesia, Texas (USA)"
+    ],
+    "uses": [
+      "Sulfuric acid production (most used chemical)",
+      "Fertilizer manufacturing",
+      "Vulcanization of rubber",
+      "Fungicide and pesticide",
+      "Pharmaceutical products"
+    ],
+    "description": "Sulfur is a bright yellow native element mineral found near volcanic vents and hot springs. It is one of the most important industrial raw materials, with sulfuric acid being the most widely produced chemical compound in the world."
+  },
+  {
+    "id": 29,
+    "name": "Halite",
+    "category": "Halide",
+    "icon": "🧂",
+    "chemical_formula": "NaCl",
+    "formula_display": "NaCl",
+    "hardness": "2.5 (Mohs scale)",
+    "hardness_short": "2.5",
+    "color": "Colorless, white, blue, orange, pink",
+    "color_short": "Colorless, white, pink, blue",
+    "luster": "Vitreous",
+    "luster_short": "Vitreous",
+    "crystal_system": "Cubic (Isometric)",
+    "crystal_short": "Cubic",
+    "density": "2.17 g/cm³",
+    "streak": "White",
+    "cleavage": "Perfect cubic",
+    "formation": [
+      "Evaporation of saline water bodies",
+      "Precipitation from concentrated brines",
+      "Salt dome diapir formation"
+    ],
+    "occurrence": [
+      "Evaporite deposits worldwide",
+      "Salt flats and dried lake beds",
+      "Underground salt mines",
+      "Dead Sea, Great Salt Lake, Himalayas"
+    ],
+    "uses": [
+      "Table salt (food seasoning and preservation)",
+      "De-icing roads in winter",
+      "Chemical industry (chlorine, sodium production)",
+      "Water softening",
+      "Food processing and preservation"
+    ],
+    "description": "Halite, commonly known as rock salt, is the mineral form of sodium chloride (NaCl). It is essential for human nutrition and has been one of the most valued commodities throughout human history. Halite has perfect cubic cleavage and a characteristic salty taste."
+  },
+  {
+    "id": 30,
+    "name": "Azurite",
+    "category": "Carbonate",
+    "icon": "🔵",
+    "chemical_formula": "Cu3(CO3)2(OH)2",
+    "formula_display": "Cu₃(CO₃)₂(OH)₂",
+    "hardness": "3.5-4 (Mohs scale)",
+    "hardness_short": "3.5-4",
+    "color": "Deep blue, azure blue",
+    "color_short": "Deep blue",
+    "luster": "Vitreous to dull",
+    "luster_short": "Vitreous",
+    "crystal_system": "Monoclinic",
+    "crystal_short": "Monoclinic",
+    "density": "3.77-3.89 g/cm³",
+    "streak": "Light blue",
+    "cleavage": "Perfect in one direction",
+    "formation": [
+      "Oxidation of copper sulfide deposits",
+      "Weathering in arid environments",
+      "Often found with malachite"
+    ],
+    "occurrence": [
+      "Oxidation zones of copper deposits",
+      "Arid and semi-arid regions",
+      "Arizona (USA), Morocco, Namibia",
+      "France, Australia, China"
+    ],
+    "uses": [
+      "Blue pigment (historical painting)",
+      "Ornamental and decorative stone",
+      "Jewelry and carved objects",
+      "Mineral specimen collecting",
+      "Historical copper ore indicator"
+    ],
+    "description": "Azurite is a deep blue copper carbonate mineral that often occurs alongside green malachite. It was the most important blue pigment in European painting during the Middle Ages and Renaissance, prized for its vivid blue color."
+  }
+]

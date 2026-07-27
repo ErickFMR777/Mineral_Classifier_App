@@ -1,0 +1,12 @@
+# The Python/PyTorch backend is kept for local development and retraining only.
+# It cannot run on Vercel (torch alone exceeds the serverless bundle limit), and
+# excluding it keeps the deployment small and stops Vercel from trying to
+# install requirements.txt.
+mineral-classifier-app/backend/
+
+# Local artefacts
+**/venv/
+**/__pycache__/
+**/*.log
+**/node_modules/
+**/dist/
