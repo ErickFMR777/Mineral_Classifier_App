@@ -21,6 +21,15 @@ import {
   env,
 } from '@huggingface/transformers';
 
+import {
+  averageEmbeddings,
+  classProbabilities,
+  decodeEmbeddings,
+  rank,
+  TOP_K,
+  type Probe,
+  type ScoringContext,
+} from './scoring';
 import type {
   ImageVariant,
   RawClassification,
@@ -29,11 +38,6 @@ import type {
 } from './protocol';
 
 const MODEL_ID = 'Xenova/clip-vit-base-patch32';
-const TOP_K = 5;
-/** Softmax temperature for the zero-shot path (mirrors the Python code). */
-const ZERO_SHOT_TEMPERATURE = 0.01;
-/** Zero-shot probabilities are less trustworthy than the probe's; scale down. */
-const ZERO_SHOT_WEIGHT = 0.3;
 
 // Our own /models/ directory holds the pre-computed embeddings, not HF models.
 // Without this transformers.js would probe it for local weights and 404.
@@ -60,20 +64,7 @@ interface TextEmbeddingsFile {
   data: string;
 }
 
-/**
- * Exported form of the sklearn LogisticRegression head. `classes` holds the
- * mineral indices the probe was trained on, in sklearn's `classes_` order.
- */
-interface ProbeFile {
-  classes: number[];
-  coef: number[][];
-  intercept: number[];
-}
-
-let classes: string[] = [];
-let textEmbeddings: Float32Array | null = null;
-let embeddingDim = 0;
-let probe: ProbeFile | null = null;
+let scoring: ScoringContext | null = null;
 let processor: Awaited<ReturnType<typeof AutoProcessor.from_pretrained>> | null = null;
 let visionModel: Awaited<
   ReturnType<typeof CLIPVisionModelWithProjection.from_pretrained>
@@ -81,30 +72,6 @@ let visionModel: Awaited<
 
 const post = (msg: WorkerResponse, transfer?: Transferable[]) =>
   (self as unknown as Worker).postMessage(msg, transfer ?? []);
-
-function decodeBase64ToFloat32(base64: string): Float32Array {
-  const binary = atob(base64);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-  return new Float32Array(bytes.buffer);
-}
-
-/** L2-normalize in place and return the same array. */
-function normalize(vec: Float32Array): Float32Array {
-  let sum = 0;
-  for (let i = 0; i < vec.length; i++) sum += vec[i] * vec[i];
-  const norm = Math.sqrt(sum) || 1;
-  for (let i = 0; i < vec.length; i++) vec[i] /= norm;
-  return vec;
-}
-
-/** Numerically stable softmax over a plain array. */
-function softmax(logits: number[]): number[] {
-  const max = Math.max(...logits);
-  const exps = logits.map((l) => Math.exp(l - max));
-  const sum = exps.reduce((a, b) => a + b, 0) || 1;
-  return exps.map((e) => e / sum);
-}
 
 async function load(): Promise<void> {
   post({ type: 'progress', stage: 'embeddings', loaded: 0, total: 1 });
@@ -116,17 +83,22 @@ async function load(): Promise<void> {
     );
   }
   const embFile: TextEmbeddingsFile = await embRes.json();
-  classes = embFile.classes;
-  embeddingDim = embFile.shape[1];
-  textEmbeddings = decodeBase64ToFloat32(embFile.data);
 
-  // Optional: present only after train_classifier.py + export_probe.py have run.
+  // Optional: present only after the probe has been trained and exported.
+  let probe: Probe | null = null;
   try {
     const probeRes = await fetch(`${import.meta.env.BASE_URL}models/probe.json`);
     if (probeRes.ok) probe = await probeRes.json();
   } catch {
     probe = null;
   }
+
+  scoring = {
+    classes: embFile.classes,
+    embeddingDim: embFile.shape[1],
+    textEmbeddings: decodeEmbeddings(embFile.data),
+    probe,
+  };
 
   post({ type: 'progress', stage: 'model', loaded: 0, total: 1 });
 
@@ -149,7 +121,7 @@ async function load(): Promise<void> {
     progress_callback,
   });
 
-  post({ type: 'ready', usingProbe: probe !== null });
+  post({ type: 'ready', usingProbe: scoring.probe !== null });
 }
 
 /**
@@ -168,68 +140,15 @@ async function embedVariants(variants: ImageVariant[]): Promise<Float32Array> {
   const { image_embeds } = await visionModel(inputs);
 
   const [rows, cols] = image_embeds.dims as [number, number];
-  const flat = image_embeds.data as Float32Array;
-
-  const averaged = new Float32Array(cols);
-  for (let r = 0; r < rows; r++) {
-    const row = normalize(flat.slice(r * cols, (r + 1) * cols));
-    for (let c = 0; c < cols; c++) averaged[c] += row[c];
-  }
-  for (let c = 0; c < cols; c++) averaged[c] /= rows;
-  return normalize(averaged);
-}
-
-/** Cosine similarity of the image embedding against every class text embedding. */
-function textSimilarities(embedding: Float32Array): number[] {
-  if (!textEmbeddings) throw new Error('Embeddings not loaded');
-  const sims: number[] = [];
-  for (let i = 0; i < classes.length; i++) {
-    let dot = 0;
-    const offset = i * embeddingDim;
-    for (let d = 0; d < embeddingDim; d++) dot += embedding[d] * textEmbeddings[offset + d];
-    sims.push(dot);
-  }
-  return sims;
-}
-
-function classProbabilities(embedding: Float32Array): number[] {
-  const zeroShot = softmax(textSimilarities(embedding).map((s) => s / ZERO_SHOT_TEMPERATURE));
-
-  if (!probe) return zeroShot;
-
-  // Trained path: multinomial logistic regression over the covered classes.
-  const logits = probe.coef.map((row, i) => {
-    let z = probe!.intercept[i];
-    for (let d = 0; d < embedding.length; d++) z += row[d] * embedding[d];
-    return z;
-  });
-  const trainedProbs = softmax(logits);
-
-  const full = new Array<number>(classes.length).fill(0);
-  probe.classes.forEach((classIdx, i) => {
-    full[classIdx] = trainedProbs[i];
-  });
-
-  // Classes the probe never saw fall back to (down-weighted) zero-shot.
-  const trained = new Set(probe.classes);
-  for (let i = 0; i < classes.length; i++) {
-    if (!trained.has(i)) full[i] = zeroShot[i] * ZERO_SHOT_WEIGHT;
-  }
-
-  const total = full.reduce((a, b) => a + b, 0);
-  return total > 0 ? full.map((p) => p / total) : full;
+  return averageEmbeddings(image_embeds.data as Float32Array, rows, cols);
 }
 
 async function classify(variants: ImageVariant[]): Promise<RawClassification> {
+  if (!scoring) throw new Error('Scoring context not loaded');
   const start = performance.now();
 
   const embedding = await embedVariants(variants);
-  const probabilities = classProbabilities(embedding);
-
-  const ranked = probabilities
-    .map((confidence, i) => ({ class: classes[i], confidence }))
-    .sort((a, b) => b.confidence - a.confidence)
-    .slice(0, Math.min(TOP_K, classes.length));
+  const ranked = rank(classProbabilities(embedding, scoring), scoring.classes, TOP_K);
 
   return {
     primary: ranked[0],

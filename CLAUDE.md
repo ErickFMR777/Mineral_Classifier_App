@@ -17,9 +17,13 @@ Code lives one level down in [mineral-classifier-app/](mineral-classifier-app/);
 ```bash
 npm run install:frontend    # from the repo root
 npm run dev                 # Vite on :5173; /api answered by a dev middleware, no Python needed
-npm run build               # tsc + vite build — the ONLY typecheck/lint gate in the repo
+npm run build               # tsc + vite build
+npm run verify              # artefact/metrics/contract invariants — run this before deploying
+npm run verify:dist         # the same, plus checks on a build in dist/
 npm run build:embeddings    # regenerate frontend/public/models/text-embeddings.json
 ```
+
+`build` and `verify` are the only gates in the repo; there is no linter and no unit-test suite. `verify` covers what `build` cannot see: embeddings that are no longer unit-length, a probe whose class indices fall outside the class list, a confusion matrix that no longer totals `test_samples`, a mineral renamed out of `minerals.json` (which renders a result card with no formula or hardness), and — with `--dist` — the ORT wasm silently reverting to the jsDelivr CDN.
 
 Retraining the probe — **no torch needed**, and this is the path to prefer:
 
@@ -41,6 +45,8 @@ There are no tests. `backend/tests/` contains only an empty `__init__.py`; `pyte
 ## Inference architecture
 
 `src/ml/` is a direct port of `backend/app/models/mineral_classifier.py`, and the two must stay numerically equivalent.
+
+[scoring.ts](mineral-classifier-app/frontend/src/ml/scoring.ts) holds the numeric core — temperature, blend weight, TTA constants, ranking — with no DOM or ONNX dependency. The worker, the main thread **and both verification scripts** import it, so there is exactly one copy of the rule. Do not reintroduce a local reimplementation in a script: Node strips the types, so `.mjs` can import the `.ts` directly, and a verifier with its own copy of the maths reports green after the real rule changes underneath it.
 
 - [engine.ts](mineral-classifier-app/frontend/src/ml/engine.ts) (main thread) decodes the photo, caps the longest side at 800 px, then builds the four test-time-augmentation variants — original, mirrored, 0.9 and 0.85 centre crops — and **transfers** their RGBA buffers to the worker.
 - [worker.ts](mineral-classifier-app/frontend/src/ml/worker.ts) embeds all four, L2-normalizes each, averages, normalizes again, then scores:

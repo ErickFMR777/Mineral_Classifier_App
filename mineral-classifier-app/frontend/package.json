@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "verify": "node scripts/verify-artifacts.mjs",
+    "verify:dist": "node scripts/verify-artifacts.mjs --dist",
     "build:embeddings": "node scripts/build-text-embeddings.mjs"
   },
   "dependencies": {

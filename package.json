@@ -8,6 +8,8 @@
     "dev": "npm --prefix mineral-classifier-app/frontend run dev",
     "build": "npm --prefix mineral-classifier-app/frontend run build",
     "preview": "npm --prefix mineral-classifier-app/frontend run preview",
+    "verify": "npm --prefix mineral-classifier-app/frontend run verify",
+    "verify:dist": "npm --prefix mineral-classifier-app/frontend run verify:dist",
     "build:embeddings": "npm --prefix mineral-classifier-app/frontend run build:embeddings"
   },
   "license": "MIT"

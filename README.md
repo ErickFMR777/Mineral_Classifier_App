@@ -45,6 +45,15 @@ npm run dev            # http://localhost:5173
 
 The dev server also answers the `/api` routes, so nothing else needs to be running. Or use `./run_all.sh`, which does the install and the one-off embedding generation for you.
 
+## Verifying before you deploy
+
+```bash
+npm run build        # typecheck + bundle
+npm run verify:dist  # invariants the build cannot see
+```
+
+`verify` exercises the real scoring module — the same `src/ml/scoring.ts` the browser runs — and checks the things that fail silently: text embeddings that are no longer unit length, a probe whose class indices fall outside the class list, a confusion matrix that stops totalling the test set, a mineral renamed out of `minerals.json` (which would render a result card with no formula or hardness), and the ONNX runtime quietly reverting to a third-party CDN.
+
 ## Deploying to Vercel
 
 Import the repository and deploy — [vercel.json](vercel.json) already sets the build command, the output directory and the routing. Leave the **Root Directory** as the repo root; do not point it at `frontend/`, or the `api/` function and `data/` will be left out.

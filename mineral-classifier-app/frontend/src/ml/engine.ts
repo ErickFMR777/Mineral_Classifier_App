@@ -5,18 +5,13 @@
  * `_get_augmented_embedding`'s image handling), then hands raw RGBA buffers to
  * the worker so the 84 MB model never blocks the UI thread.
  */
+import { CROP_SCALES, MAX_SIDE } from './scoring';
 import type {
   ImageVariant,
   RawClassification,
   WorkerRequest,
   WorkerResponse,
 } from './protocol';
-
-/** Scales used for the two centre crops, matching the Python implementation. */
-const CROP_SCALES = [0.9, 0.85];
-
-/** Upper bound on the longest side before augmenting — CLIP resizes to 224 anyway. */
-const MAX_SIDE = 800;
 
 export interface ModelLoadProgress {
   /** 0..1 across the whole load, or null while the size is still unknown. */
