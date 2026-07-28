@@ -12,7 +12,6 @@
   "functions": {
     "api/index.py": {
       "includeFiles": "data/**",
-      "memory": 256,
       "maxDuration": 10
     }
   },
