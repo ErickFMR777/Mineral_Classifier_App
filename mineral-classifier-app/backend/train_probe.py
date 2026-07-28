@@ -189,6 +189,15 @@ def main() -> int:
         },
     }
 
+    # The external-validation block is measured separately (web photographs, not
+    # part of this dataset), so carry it across instead of dropping it on every
+    # retrain. Delete it by hand if the probe changes enough to invalidate it.
+    if METRICS_OUT.exists():
+        previous = json.loads(METRICS_OUT.read_text(encoding="utf-8"))
+        if "external_validation" in previous:
+            metrics["external_validation"] = previous["external_validation"]
+            print("Preserved existing external_validation block")
+
     METRICS_OUT.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {METRICS_OUT}")
 

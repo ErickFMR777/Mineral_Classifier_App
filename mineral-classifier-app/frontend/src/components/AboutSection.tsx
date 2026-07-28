@@ -234,6 +234,24 @@ export const AboutSection: React.FC = () => {
           </div>
         </div>
 
+        {metrics.external_validation && (
+          <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+            <p className="text-xs leading-relaxed text-red-800">
+              <span className="font-semibold">These figures describe the benchmark, not your photos.</span>{' '}
+              They come from a held-out split of the dataset the model was trained on. Measured
+              against {metrics.external_validation.samples} ordinary web photographs instead, top-1
+              accuracy falls to about {pct(metrics.external_validation.top1_accuracy)}.{' '}
+              <button
+                onClick={() => setMetricsTab('limitations')}
+                className="font-semibold underline underline-offset-2 hover:text-red-900"
+              >
+                See Limitations
+              </button>
+              .
+            </p>
+          </div>
+        )}
+
         <div className="rounded-xl bg-gray-50 border border-gray-200 p-4">
           <p className="text-xs text-gray-500 leading-relaxed">
             <span className="font-semibold text-gray-700">Reading these:</span> precision answers
@@ -447,6 +465,7 @@ export const AboutSection: React.FC = () => {
     if (!metrics) return null;
     const mi = metrics.model_info;
     const db = metrics.dataset_balance;
+    const ev = metrics.external_validation;
     const totalSamples = mi.training_samples + mi.validation_samples + mi.test_samples;
 
     const items: { title: string; body: React.ReactNode; tone: 'amber' | 'red' | 'gray' }[] = [
@@ -521,16 +540,54 @@ export const AboutSection: React.FC = () => {
           </>
         ),
       },
+      ...(ev
+        ? [
+            {
+              tone: 'red' as const,
+              title: 'On photographs from elsewhere, accuracy drops sharply',
+              body: (
+                <>
+                  Every number on the other tabs comes from a held-out split of the same dataset the
+                  model was trained on — studio photographs of curated specimens on plain
+                  backgrounds. Tested instead against {ev.samples} ordinary web photographs from{' '}
+                  {ev.source.split(' (')[0]} spanning {ev.classes_covered} minerals, top-1 accuracy
+                  falls from {pct(ev.benchmark_top1)} to roughly {pct(ev.top1_accuracy)} (95%
+                  interval {pct(ev.top1_ci95[0])}–{pct(ev.top1_ci95[1])}), with the right answer in
+                  the top three about {pct(ev.top3_accuracy)} of the time. That sample is small and
+                  its labels come from image-search titles, so treat the exact figure loosely — but
+                  the size of the drop is not in doubt.{' '}
+                  <span className="font-semibold">
+                    Expect roughly one in four of your own photos to be right at the top, not seven
+                    in ten.
+                  </span>
+                </>
+              ),
+            },
+            {
+              tone: 'amber' as const,
+              title: 'Confidence is not calibrated',
+              body: (
+                <>
+                  The percentage next to a prediction is the model&rsquo;s internal score, not a
+                  probability of being correct. In the external test above it was confidently wrong
+                  more than once — including a 90% score on a mineral it had never been trained on.
+                  A high number means the photo looked strongly like one class, not that the answer
+                  is trustworthy. Use the alternative matches: the correct mineral is far more often
+                  somewhere in the top three than it is first.
+                </>
+              ),
+            },
+          ]
+        : []),
       {
         tone: 'gray',
-        title: 'Benchmark conditions are kinder than the field',
+        title: 'Why field photographs are harder',
         body: (
           <>
-            The training images are studio photographs of curated, cleaned specimens on plain
-            backgrounds. Field photos — weathered surfaces, mineral still in its matrix, mixed
-            lighting, several minerals in one frame — sit outside that distribution, so expect real
-            accuracy to land below the numbers above. Those numbers come from a held-out split of
-            the same dataset and measure performance on that dataset, not in the field.
+            Weathered surfaces, minerals still embedded in their matrix, mixed lighting, several
+            species in one frame and no size reference all sit outside what the model was shown.
+            Cropping tightly to a single clean specimen, in even light, on an uncluttered
+            background is the closest you can get to the conditions it was trained under.
           </>
         ),
       },

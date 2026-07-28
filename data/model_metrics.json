@@ -1051,5 +1051,17 @@
         4
       ]
     ]
+  },
+  "external_validation": {
+    "source": "Wikimedia Commons photographs (outside the training dataset)",
+    "samples": 47,
+    "classes_covered": 24,
+    "top1_accuracy": 0.2553,
+    "top1_ci95": [
+      0.153,
+      0.395
+    ],
+    "top3_accuracy": 0.4894,
+    "benchmark_top1": 0.7115
   }
 }

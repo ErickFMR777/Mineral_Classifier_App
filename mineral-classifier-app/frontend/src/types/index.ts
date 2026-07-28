@@ -100,10 +100,27 @@ export interface ConfusionMatrix {
   matrix: number[][];
 }
 
+/**
+ * Accuracy measured on photographs from outside the training dataset. Produced
+ * by a separate evaluation run, not by train_probe.py, and preserved across
+ * retrains.
+ */
+export interface ExternalValidation {
+  source: string;
+  samples: number;
+  classes_covered: number;
+  top1_accuracy: number;
+  /** 95% Wilson interval — the sample is small, so the interval is the point. */
+  top1_ci95: [number, number];
+  top3_accuracy: number;
+  benchmark_top1: number;
+}
+
 export interface ModelMetrics {
   model_info: ModelInfo;
   overall_metrics: OverallMetrics;
   dataset_balance?: DatasetBalance;
+  external_validation?: ExternalValidation;
   per_class_metrics: PerClassMetric[];
   confusion_matrix: ConfusionMatrix;
 }

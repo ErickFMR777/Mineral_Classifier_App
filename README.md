@@ -30,7 +30,9 @@ Measured on a held-out test split of 1,539 specimen photographs:
 | Balanced accuracy | 58.5 % |
 | Weighted F1 | 70.6 % |
 
-The probe covers 25 of the 30 classes. **Bauxite, Diamond, Olivine, Talc and Halite have no training images at all** — they exist nowhere in the source dataset — so they are scored by zero-shot CLIP only and are markedly less reliable. Training data is also very uneven (2,015 images for Quartz against 36 for Azurite, a 56:1 ratio), which is why balanced accuracy sits 13 points below top-1. The **Limitations** tab in the app's About section spells all of this out.
+The probe covers 25 of the 30 classes. **Bauxite, Diamond, Olivine, Talc and Halite have no training images at all** — they exist nowhere in the source dataset — so they are scored by zero-shot CLIP only and are markedly less reliable. Training data is also very uneven (2,015 images for Quartz against 36 for Azurite, a 56:1 ratio), which is why balanced accuracy sits 13 points below top-1.
+
+**Those figures describe the benchmark, not the real world.** Evaluated against 47 ordinary Wikimedia photographs across 24 minerals — outside the training distribution — top-1 accuracy falls to **≈25 %** (95 % interval 15–40 %), with the correct answer in the top three about half the time. The sample is small and its labels come from image-search titles, so read the exact figure loosely; the size of the drop is not in doubt. The **Limitations** tab in the app's About section spells all of this out, including the fact that the confidence percentage is not calibrated.
 
 ## Quick start
 

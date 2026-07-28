@@ -49,7 +49,11 @@ There are no tests. `backend/tests/` contains only an empty `__init__.py`; `pyte
 
 A trained probe **is** committed at `public/models/probe.json` (25 of the 30 classes; Bauxite, Diamond, Olivine, Talc and Halite have no data anywhere in mineralimage5K-98). `data/model_metrics.json` describes exactly this probe, measured on the held-out split: **71.2 % top-1, 88.9 % top-3, 58.5 % balanced**.
 
-Do not be tempted to swap the blend for pure zero-shot. Measured on the same test split, zero-shot alone scores **19.2 % top-1** — a small sample of visually distinctive minerals (pyrite, azurite) makes zero-shot look far better than it is. Sweeping the mixture weight showed the probe-dominant end is flat (w=0.9 costs 0.1 pp, w=0.8 costs 0.3 pp), so there is room to blend for out-of-distribution robustness, but nothing measured so far justifies diverging from the Python rule.
+Do not be tempted to swap the blend for pure zero-shot. Measured on the same test split, zero-shot alone scores **19.2 % top-1** — a small sample of visually distinctive minerals (pyrite, azurite) makes zero-shot look far better than it is.
+
+The mixture weight was swept on both distributions. On 47 out-of-distribution web photos the shipped rule scores 25.5 % top-1 and a `0.4·probe + 0.6·zero-shot` blend scores 34.0 %, but the Wilson intervals overlap heavily (12 vs 16 correct out of 47) while the same blend costs ~10 pp in-distribution. **That is why the rule was left alone** — the gain is not statistically resolvable and the cost is. Revisit only with a substantially larger out-of-distribution set.
+
+`external_validation` in `model_metrics.json` records that measurement. It is produced by a separate eval, not by `train_probe.py`, which deliberately carries it across retrains.
 
 Two settings in `worker.ts` are deliberate and easy to break:
 
