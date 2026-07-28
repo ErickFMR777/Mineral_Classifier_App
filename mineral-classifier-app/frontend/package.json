@@ -9,24 +9,27 @@
     "preview": "vite preview",
     "verify": "node scripts/verify-artifacts.mjs",
     "verify:dist": "node scripts/verify-artifacts.mjs --dist",
+    "serve:dist": "node scripts/serve-like-vercel.mjs",
+    "e2e": "node scripts/e2e-browser.mjs",
     "build:embeddings": "node scripts/build-text-embeddings.mjs"
   },
   "dependencies": {
+    "@huggingface/transformers": "^3.7.0",
+    "axios": "^1.6.2",
+    "framer-motion": "^10.16.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "axios": "^1.6.2",
-    "react-dropzone": "^14.2.3",
-    "framer-motion": "^10.16.4",
-    "@huggingface/transformers": "^3.7.0"
+    "react-dropzone": "^14.2.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.0.8",
-    "typescript": "^5.2.2",
-    "tailwindcss": "^3.3.6",
+    "autoprefixer": "^10.4.16",
+    "playwright": "^1.62.0",
     "postcss": "^8.4.31",
-    "autoprefixer": "^10.4.16"
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8"
   }
 }

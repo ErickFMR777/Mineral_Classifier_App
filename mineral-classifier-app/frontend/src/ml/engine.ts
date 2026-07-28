@@ -175,6 +175,10 @@ async function buildVariants(file: File): Promise<ImageVariant[]> {
     const resized = await createImageBitmap(bitmap, {
       resizeWidth: Math.round(bitmap.width * scale),
       resizeHeight: Math.round(bitmap.height * scale),
+      // Without this the browser defaults to 'low', a fast box filter that
+      // visibly aliases fine mineral texture — and made the browser disagree
+      // with the offline evaluation pipeline, which resamples at high quality.
+      resizeQuality: 'high',
     });
     bitmap.close();
     bitmap = resized;

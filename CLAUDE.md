@@ -23,6 +23,10 @@ npm run verify:dist         # the same, plus checks on a build in dist/
 npm run build:embeddings    # regenerate frontend/public/models/text-embeddings.json
 ```
 
+`npm run e2e -- <imageDir>` drives the built bundle through headless Chromium (`npm i -D playwright && npx playwright install chromium` first; `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` is set in `vercel.json` so the deploy install never pulls browsers). It is the only check that reaches the worker, the canvas augmentation, ONNX under WebAssembly and the model download.
+
+Note that the browser and the Node evaluation scripts do **not** produce bit-identical results: `sharp` resamples with Lanczos3, the browser with `createImageBitmap`. `resizeQuality: 'high'` in `engine.ts` narrows the gap and is required — the default `'low'` aliases mineral texture badly. Confidently-classified images then agree closely (75.3 % vs 75.1 %); low-confidence ones can still flip between two wrong answers. The browser is what users get; the Node path is a close approximation used for bulk evaluation, so figures like the 25.5 % out-of-distribution number are measured there.
+
 `build` and `verify` are the only gates in the repo; there is no linter and no unit-test suite. `verify` covers what `build` cannot see: embeddings that are no longer unit-length, a probe whose class indices fall outside the class list, a confusion matrix that no longer totals `test_samples`, a mineral renamed out of `minerals.json` (which renders a result card with no formula or hardness), and — with `--dist` — the ORT wasm silently reverting to the jsDelivr CDN.
 
 Retraining the probe — **no torch needed**, and this is the path to prefer:

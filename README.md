@@ -52,6 +52,16 @@ npm run build        # typecheck + bundle
 npm run verify:dist  # invariants the build cannot see
 ```
 
+To exercise the built bundle in a real browser — the worker, canvas augmentation, ONNX under WebAssembly and the model download, none of which Node can reach:
+
+```bash
+cd mineral-classifier-app/frontend
+npm i -D playwright && npx playwright install chromium   # one-off
+npm run e2e -- <dirOfImagesNamedByClass>
+```
+
+It serves `dist/` the way Vercel does (`npm run serve:dist` on its own if you just want to click around), loads the page, waits for the model, classifies each photo, walks all three sections and fails on any console error or broken request.
+
 `verify` exercises the real scoring module — the same `src/ml/scoring.ts` the browser runs — and checks the things that fail silently: text embeddings that are no longer unit length, a probe whose class indices fall outside the class list, a confusion matrix that stops totalling the test set, a mineral renamed out of `minerals.json` (which would render a result card with no formula or hardness), and the ONNX runtime quietly reverting to a third-party CDN.
 
 ## Deploying to Vercel
