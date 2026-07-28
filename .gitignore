@@ -54,3 +54,10 @@ Thumbs.db
 # Temp
 tmp/
 temp/
+
+# Added by `vercel link`. Narrowed from `.env*` so the committed .env.example,
+# which documents the backend's configuration, is not swallowed too.
+.vercel
+.env
+.env.*
+!.env.example
