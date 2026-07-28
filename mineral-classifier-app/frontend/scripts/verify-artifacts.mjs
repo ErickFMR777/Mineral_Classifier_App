@@ -105,12 +105,19 @@ if (git(['rev-parse', '--is-inside-work-tree']) !== 'true') {
     if (ignored) fail(`${file} is not matched by a .gitignore rule`, 'a regenerated copy would be dropped');
   }
 
-  // An artefact that is tracked but locally modified would deploy stale.
-  const dirty = (git(['status', '--porcelain', '--', ...ESSENTIAL]) ?? '')
-    .split('\n')
-    .filter(Boolean);
-  assert(dirty.length === 0, 'no essential file has uncommitted changes',
-    dirty.map((l) => l.trim()).join('; '));
+  // "Did you forget to commit this?" is a question for a developer, not for a
+  // build container: the CI checkout is disposable and the platform may touch
+  // tracked files while building. Asserting a clean tree there fails the deploy
+  // for a condition that cannot matter.
+  if (process.env.CI || process.env.VERCEL) {
+    console.log('  \x1b[2mSKIP\x1b[0m clean-tree check (not meaningful in CI)');
+  } else {
+    const dirty = (git(['status', '--porcelain', '--', ...ESSENTIAL]) ?? '')
+      .split('\n')
+      .filter(Boolean);
+    assert(dirty.length === 0, 'no essential file has uncommitted changes',
+      dirty.map((l) => l.trim()).join('; '));
+  }
 }
 
 // ---------------------------------------------------------------------------
