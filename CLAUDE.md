@@ -87,7 +87,11 @@ Editing `minerals.json` or `mineral_prompts.json` requires re-running `npm run b
 
 [vercel.json](vercel.json) rewrites `/api/(.*)` to `/api/index?route=$1` — the function reads the original path from the `route` query parameter, since a Vercel rewrite does not otherwise preserve it. `api/index.py` uses only the standard library on purpose: no `requirements.txt` means no pip resolution and essentially no way for the Python build to fail. `includeFiles: "data/**"` is what puts the JSON in the bundle.
 
-The Vercel **Root Directory must stay at the repo root**. Pointing it at `frontend/` drops `api/` and `data/`.
+The Vercel **Root Directory must stay at the repo root**. Pointing it at `frontend/` drops `api/` and `data/`. `installCommand` guards this: it tests for the frontend `package.json` and aborts with an explicit message, because the native failure ("package.json not found" against a path built from the wrong root) is very hard to read. `framework: null` is set deliberately so a stale dashboard preset cannot override the explicit build settings. `buildCommand` ends with `verify:dist`, so a deployment cannot ship with broken artefacts.
+
+Two things can still only be fixed in the dashboard: the Root Directory itself, and **Deployment Protection** — if that is on without a custom domain, the app deploys successfully and then hides behind Vercel's login for every visitor.
+
+The function has **no third-party dependencies**, which removes a whole class of runtime failures: no wheel has to exist for Vercel's CPython, and there is no multipart parsing, so the removal of `cgi` in Python 3.13 is a non-issue. It uses only `json`, `os`, `http.server` and `urllib.parse`, verified to run unchanged on 3.14.
 
 Vite config notes: `server.fs.allow` is widened to the repo root so `data/` can be imported from outside the Vite root, `optimizeDeps.exclude` holds `@huggingface/transformers`, and `worker.format` is `es` because the inference worker is a code-split module worker.
 

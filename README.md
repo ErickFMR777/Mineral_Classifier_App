@@ -56,7 +56,16 @@ npm run verify:dist  # invariants the build cannot see
 
 ## Deploying to Vercel
 
-Import the repository and deploy — [vercel.json](vercel.json) already sets the build command, the output directory and the routing. Leave the **Root Directory** as the repo root; do not point it at `frontend/`, or the `api/` function and `data/` will be left out.
+Import the repository and deploy — [vercel.json](vercel.json) sets the build command, the output directory, the routing and `framework: null`, so it overrides whatever preset the dashboard may have guessed.
+
+**Two settings live only in the dashboard and cannot be fixed from this repo:**
+
+| Setting | Required value | If it is wrong |
+|---|---|---|
+| Settings → General → **Root Directory** | *empty* (the repo root) | The build aborts with an explicit message. Pointing it at `frontend/` or `backend/` also drops `api/` and `data/` from the deployment entirely. |
+| Settings → **Deployment Protection** | off, for a public site | The site compiles and deploys but every visitor hits Vercel's login wall. |
+
+The install command guards the first one, so a misconfigured Root Directory fails in seconds with an actionable error instead of a confusing "package.json not found". The build then runs `verify:dist`, so a deployment cannot ship with broken artefacts.
 
 | | |
 |---|---|

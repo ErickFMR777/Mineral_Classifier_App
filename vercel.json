@@ -1,7 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm --prefix mineral-classifier-app/frontend install",
-  "buildCommand": "npm --prefix mineral-classifier-app/frontend run build",
+  "framework": null,
+  "installCommand": "test -f mineral-classifier-app/frontend/package.json || (echo 'BUILD ABORTED: mineral-classifier-app/frontend/package.json not found from the build directory. The Vercel Root Directory must be the REPOSITORY ROOT - Settings > General > Root Directory, leave it EMPTY and redeploy. Pointing it at frontend/ or backend/ also drops api/ and data/ from the deployment.' && exit 1) && npm --prefix mineral-classifier-app/frontend install",
+  "buildCommand": "npm --prefix mineral-classifier-app/frontend run build && npm --prefix mineral-classifier-app/frontend run verify:dist",
   "outputDirectory": "mineral-classifier-app/frontend/dist",
   "functions": {
     "api/index.py": {

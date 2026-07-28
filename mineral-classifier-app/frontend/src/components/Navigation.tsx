@@ -1,9 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { onStatus } from '../ml/engine';
+import type { EngineStatus } from '../ml/engine';
 
 interface NavigationProps {
   activeSection: string;
   onNavigate: (section: string) => void;
+}
+
+/**
+ * Wording for the status pill. This used to be a hardcoded "Online" badge,
+ * which claimed the model was ready while it was still downloading — or had
+ * failed outright. It now reflects the engine's actual state.
+ */
+const STATUS_LABEL: Record<EngineStatus, string> = {
+  idle: 'Starting',
+  loading: 'Loading model',
+  ready: 'Model ready',
+  error: 'Model unavailable',
+};
+
+const STATUS_STYLE: Record<EngineStatus, { pill: string; dot: string; text: string }> = {
+  idle: { pill: 'bg-gray-50 border-gray-200', dot: 'bg-gray-400', text: 'text-gray-600' },
+  loading: { pill: 'bg-violet-50 border-violet-200/80', dot: 'bg-violet-500', text: 'text-violet-700' },
+  ready: { pill: 'bg-emerald-50 border-emerald-200/80', dot: 'bg-emerald-500', text: 'text-emerald-700' },
+  error: { pill: 'bg-red-50 border-red-200', dot: 'bg-red-500', text: 'text-red-700' },
+};
+
+function useEngineStatus(): EngineStatus {
+  const [status, setStatus] = useState<EngineStatus>('idle');
+  useEffect(() => onStatus(setStatus), []);
+  return status;
 }
 
 const navItems = [
@@ -38,6 +65,7 @@ const navItems = [
 
 export const Navigation: React.FC<NavigationProps> = ({ activeSection, onNavigate }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const engineStatus = useEngineStatus();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/60">
@@ -89,9 +117,18 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection, onNavigat
 
           {/* Right side */}
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 bg-emerald-50 border border-emerald-200/80 rounded-lg">
-              <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-              <span className="text-[11px] font-semibold text-emerald-700">Online</span>
+            <div
+              className={`hidden md:flex items-center gap-1.5 px-2.5 py-1.5 border rounded-lg ${STATUS_STYLE[engineStatus].pill}`}
+              title={STATUS_LABEL[engineStatus]}
+            >
+              <div
+                className={`w-1.5 h-1.5 rounded-full ${STATUS_STYLE[engineStatus].dot} ${
+                  engineStatus === 'ready' ? '' : 'animate-pulse'
+                }`}
+              />
+              <span className={`text-[11px] font-semibold ${STATUS_STYLE[engineStatus].text}`}>
+                {STATUS_LABEL[engineStatus]}
+              </span>
             </div>
 
             {/* Mobile Menu Button */}
@@ -137,8 +174,14 @@ export const Navigation: React.FC<NavigationProps> = ({ activeSection, onNavigat
                 </button>
               ))}
               <div className="flex items-center gap-1.5 px-4 py-2 mt-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                <span className="text-[11px] font-semibold text-emerald-700">AI Model Online</span>
+                <div
+                  className={`w-1.5 h-1.5 rounded-full ${STATUS_STYLE[engineStatus].dot} ${
+                    engineStatus === 'ready' ? '' : 'animate-pulse'
+                  }`}
+                />
+                <span className={`text-[11px] font-semibold ${STATUS_STYLE[engineStatus].text}`}>
+                  {STATUS_LABEL[engineStatus]}
+                </span>
               </div>
             </div>
           </motion.div>
