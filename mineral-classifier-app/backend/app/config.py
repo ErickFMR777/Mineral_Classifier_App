@@ -13,13 +13,17 @@ load_dotenv()
 # ==================== DIRECTORIES ====================
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
-MODELS_DIR = Path(os.getenv("MODELS_DIR", str(BASE_DIR.parent / "models")))
+
+# The canonical data directory at the repo root, shared with the SPA and the
+# serverless API. Keeping a second copy of mineral_classes.json here would be
+# actively dangerous: that array *is* the integer label space of the trained
+# probe, so a divergence would silently map predictions onto the wrong minerals.
+CANONICAL_DATA_DIR = Path(
+    os.getenv("CANONICAL_DATA_DIR", str(BASE_DIR.parent.parent / "data"))
+)
 
 # Create directories if they don't exist
 DATA_DIR.mkdir(exist_ok=True)
-
-# ==================== DATABASE ====================
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./data/database.db")
 
 # ==================== API CONFIGURATION ====================
 API_HOST = os.getenv("API_HOST", "0.0.0.0")
@@ -27,7 +31,7 @@ API_PORT = int(os.getenv("API_PORT", 8000))
 API_RELOAD = os.getenv("API_RELOAD", "true").lower() == "true"
 
 # ==================== ML MODELS ====================
-MINERAL_CLASSES_PATH = MODELS_DIR / "mineral_classes.json"
+MINERAL_CLASSES_PATH = CANONICAL_DATA_DIR / "mineral_classes.json"
 
 # Model parameters
 MODEL_DEVICE = "cpu"  # Codespaces CPU only

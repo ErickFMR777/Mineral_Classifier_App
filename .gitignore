@@ -22,13 +22,33 @@ build/
 .DS_Store
 Thumbs.db
 
-# Model files (large binary)
+# Vercel
+.vercel/
+
+# ---------------------------------------------------------------------------
+# Training intermediates. These are large, regenerable, and NOT needed to run
+# or deploy the app: the shipped model artefacts are JSON (see below).
+# ---------------------------------------------------------------------------
 *.pt
 *.pth
 *.pkl
 *.npy
 
-# Database
+# ---------------------------------------------------------------------------
+# Never ignore what the deployed app loads at runtime.
+#
+# text-embeddings.json holds the zero-shot class embeddings and probe.json the
+# trained classifier head. Losing either does not break the build — it breaks
+# the app silently at runtime, in production only. These negations exist so a
+# future broadened rule cannot drop them; `npm run verify` also asserts that
+# every essential file is tracked by git.
+# ---------------------------------------------------------------------------
+!mineral-classifier-app/frontend/public/models/
+!mineral-classifier-app/frontend/public/models/**
+!data/
+!data/**
+
+# Databases (nothing in this project uses one; kept to catch stray local files)
 *.db
 
 # Temp

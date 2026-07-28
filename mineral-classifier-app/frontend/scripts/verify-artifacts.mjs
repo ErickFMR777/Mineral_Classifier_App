@@ -13,8 +13,9 @@
  * types), so if the temperature, the blend weight or the ranking changes, this
  * script exercises the new behaviour rather than a stale copy of the old one.
  */
+import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { relative, resolve } from 'node:path';
 
 import {
   TOP_K,
@@ -56,6 +57,60 @@ function assert(condition, label, detail = '') {
 
 function section(title) {
   console.log(`\n\x1b[1m${title}\x1b[0m`);
+}
+
+// ---------------------------------------------------------------------------
+section('0. Everything the deployed app needs is committed');
+// ---------------------------------------------------------------------------
+
+// A .gitignore rule that swallows an artefact does not break the build — it
+// breaks the deployment, silently, and only in production. Assert that git is
+// actually tracking each file the running app loads.
+const ESSENTIAL = [
+  'data/minerals.json',
+  'data/mineral_classes.json',
+  'data/mineral_prompts.json',
+  'data/model_metrics.json',
+  'api/index.py',
+  'vercel.json',
+  'package.json',
+  'mineral-classifier-app/frontend/public/models/text-embeddings.json',
+];
+
+const git = (args) => {
+  try {
+    return execFileSync('git', args, { cwd: REPO, encoding: 'utf-8' }).trim();
+  } catch {
+    return null;
+  }
+};
+
+if (git(['rev-parse', '--is-inside-work-tree']) !== 'true') {
+  console.log('  \x1b[33mNOTE\x1b[0m not a git checkout — skipping tracking checks');
+} else {
+  const optional = ['mineral-classifier-app/frontend/public/models/probe.json'];
+  for (const file of [...ESSENTIAL, ...optional]) {
+    const onDisk = existsSync(resolve(REPO, file));
+    if (!onDisk) {
+      if (optional.includes(file)) continue;
+      fail(`${file} exists`);
+      continue;
+    }
+    const tracked = git(['ls-files', '--error-unmatch', file]) !== null;
+    // --no-index is essential: without it git reports nothing for files already
+    // in the index, so a rule that would swallow the artefact on a fresh add
+    // stays invisible until someone regenerates it and it silently vanishes.
+    const ignored = git(['check-ignore', '--no-index', '-q', file]) !== null;
+    assert(tracked, `${file} is committed`);
+    if (ignored) fail(`${file} is not matched by a .gitignore rule`, 'a regenerated copy would be dropped');
+  }
+
+  // An artefact that is tracked but locally modified would deploy stale.
+  const dirty = (git(['status', '--porcelain', '--', ...ESSENTIAL]) ?? '')
+    .split('\n')
+    .filter(Boolean);
+  assert(dirty.length === 0, 'no essential file has uncommitted changes',
+    dirty.map((l) => l.trim()).join('; '));
 }
 
 // ---------------------------------------------------------------------------

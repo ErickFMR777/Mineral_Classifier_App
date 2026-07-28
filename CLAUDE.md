@@ -81,11 +81,13 @@ Two settings in `worker.ts` are deliberate and easy to break:
 | `minerals.json` | Full geological records; `*_short` fields are the catalog card variants |
 | `mineral_classes.json` | **Array order is the integer label space of any trained probe** — reordering invalidates it |
 | `mineral_prompts.json` | 4 zero-shot prompts per mineral |
-| `model_metrics.json` | Powers the About dashboard |
+| `model_metrics.json` | Powers the About dashboard; `external_validation` is preserved across retrains |
+
+Runtime artefacts live in `frontend/public/models/`: `text-embeddings.json` (82 KB, without it the classifier will not start) and `probe.json` (258 KB, without it the app silently drops to 19 % zero-shot accuracy). Neither failure surfaces at build time. The root `.gitignore` carries explicit negations for both paths and for `data/`, and section 0 of `npm run verify` asserts that git tracks each essential file and that `git check-ignore --no-index` finds no rule that would swallow a regenerated copy — `--no-index` matters, because for an already-tracked file plain `check-ignore` reports nothing and the landmine stays invisible.
 
 Editing `minerals.json` or `mineral_prompts.json` requires re-running `npm run build:embeddings`. Adding a mineral means touching `mineral_classes.json`, `minerals.json` and `mineral_prompts.json`, then regenerating embeddings and retraining any probe.
 
-`mineral-classifier-app/models/mineral_classes.json` and `backend/{app/,}data/model_metrics.json` are stale duplicates the backend still reads; the canonical copies are in `data/`.
+There are no longer any duplicates: `mineral-classifier-app/models/` and the two copies of `model_metrics.json` under `backend/` have been deleted, and the backend reads `data/` through `CANONICAL_DATA_DIR` in `config.py`. Do not reintroduce a second `mineral_classes.json` — that array *is* the probe's integer label space, so a divergence would map predictions onto the wrong minerals with nothing failing loudly.
 
 ## Deployment specifics
 

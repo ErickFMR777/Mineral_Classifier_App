@@ -98,9 +98,23 @@ Served by a single serverless function. All endpoints are public, CORS-enabled a
 
 `POST /api/classify/mineral` is gone and returns **410 Gone** — classification is a client-side operation now.
 
+## What must stay committed
+
+The app has no external model store: everything it needs at runtime is in the repository, except the CLIP vision encoder, which the browser fetches from the Hugging Face CDN and caches.
+
+| Artefact | Size | Losing it |
+|---|---|---|
+| `frontend/public/models/text-embeddings.json` | 82 KB | Classifier fails to start |
+| `frontend/public/models/probe.json` | 258 KB | Silently degrades to zero-shot (19 % instead of 71 %) |
+| `data/*.json` | 76 KB | Catalog, About and enrichment break |
+
+None of these break the build — they break the deployed app, in production only. Two guards exist: the root [.gitignore](.gitignore) carries explicit negations for those paths, and `npm run verify` asserts that git is actually tracking each one and that no ignore rule would swallow a regenerated copy.
+
+Training intermediates (`*.pkl`, `*.npy`, `*.pt`) *are* ignored on purpose — they are large and regenerable, and nothing at runtime reads them.
+
 ## Data
 
-[data/](data/) is the single source of truth, read by both the SPA and the serverless function:
+[data/](data/) is the single source of truth, read by the SPA, the serverless function and the backend alike:
 
 | File | Contents |
 |---|---|

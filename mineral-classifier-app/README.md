@@ -5,9 +5,10 @@ See the [repository README](../README.md) for deployment and the overall picture
 ```
 mineral-classifier-app/
 ├── frontend/     React SPA + in-browser CLIP inference (this is what ships)
-├── backend/      FastAPI + PyTorch — training and local experiments only
-└── models/       Legacy copy of mineral_classes.json (canonical lives in ../data/)
+└── backend/      FastAPI + PyTorch — training and local experiments only
 ```
+
+All reference data lives in [../data/](../data/) and is read from there by the SPA, the serverless API and the backend alike.
 
 ## Frontend
 

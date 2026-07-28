@@ -39,7 +39,7 @@ GROUP_MAP = {
 }
 ALL_MAP = {**DIRECT_MAP, **GROUP_MAP}
 
-TARGET_CLASSES_PATH = Path(__file__).parent.parent / "models" / "mineral_classes.json"
+TARGET_CLASSES_PATH = Path(__file__).resolve().parents[2] / "data" / "mineral_classes.json"
 OUTPUT_DIR = Path(__file__).parent / "data"
 
 

@@ -1,3 +1,6 @@
+# Most rules live in the repo-root .gitignore. This file only covers paths
+# specific to the application subtree.
+
 # Dependencies
 node_modules/
 __pycache__/
@@ -22,14 +25,19 @@ build/
 .DS_Store
 Thumbs.db
 
-# Model files (large)
+# Training intermediates written by train_classifier.py and
+# scripts/extract-features.mjs. Large, regenerable, and not needed to deploy.
 *.pt
 *.pth
 *.pkl
 *.npy
-!models/mineral_classes.json
 
-# Database
+# The shipped model artefacts are JSON under frontend/public/models/ and are
+# deliberately tracked — see the note in the root .gitignore. The former
+# `!models/mineral_classes.json` exception is gone along with the duplicate it
+# protected; the canonical class list now lives only in the repo-root data/.
+
+# Database (nothing in this project uses one)
 *.db
 
 # Temp
