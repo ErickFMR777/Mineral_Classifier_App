@@ -366,10 +366,17 @@ export const AboutSection: React.FC = () => {
             <span className="font-semibold text-gray-700">Why the diagonal is uneven:</span> row
             brightness tracks how many test specimens a class has, which in turn tracks how many
             training images it had. Sparse rows are the classes the dataset barely covers, so their
-            row is both faint and more scattered. Most off-diagonal mass is not random either — it
-            clusters between minerals that genuinely look alike in a photograph (metallic sulfides
-            with one another, the green and blue copper carbonates, the dark chain silicates), which
-            is the expected failure mode for a model that only ever sees colour and texture.
+            row is both faint and more scattered.
+          </p>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            <span className="font-semibold text-gray-700">The errors are not random.</span> Two
+            patterns dominate. First, minerals get pulled toward whichever class has the most
+            training images: colourless and pale specimens drift into Quartz (a third of misread
+            Calcite and Fluorite land there), and prismatic ones drift into Feldspar. That is the
+            class imbalance expressing itself directly. Second, genuinely look-alike pairs swap with
+            each other — the two dark iron oxides Magnetite and Hematite, and the two dark chain
+            silicates Amphibole and Pyroxene — which is the expected failure mode for a model that
+            only ever sees colour, texture and shape.
           </p>
           <p className="text-xs text-gray-500 leading-relaxed">
             Only the {metrics.model_info.trained_classes} trained classes appear here. The{' '}

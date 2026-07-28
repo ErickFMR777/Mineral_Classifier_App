@@ -14,9 +14,23 @@ The original version ran CLIP on a FastAPI server. PyTorch alone is far larger t
 
 1. CLIP ViT-B/32's vision encoder (ONNX, int8, 84 MB) is downloaded once from the Hugging Face CDN and cached by the browser.
 2. A Web Worker embeds the photo four times — original, mirrored and two centre crops — and averages the results (the same test-time augmentation the Python classifier used).
-3. That 512-d embedding is scored against pre-computed text embeddings for all 30 minerals, and optionally against a trained linear probe.
+3. That 512-d embedding is scored by a trained linear probe, with pre-computed zero-shot text embeddings covering the classes the probe has no data for.
 
 Photos never leave the device, and after the first load the classifier works offline.
+
+## Accuracy
+
+Measured on a held-out test split of 1,539 specimen photographs:
+
+| | |
+|---|---|
+| Top-1 accuracy | **71.2 %** |
+| Top-3 accuracy | 88.9 % |
+| Top-5 accuracy | 93.7 % |
+| Balanced accuracy | 58.5 % |
+| Weighted F1 | 70.6 % |
+
+The probe covers 25 of the 30 classes. **Bauxite, Diamond, Olivine, Talc and Halite have no training images at all** — they exist nowhere in the source dataset — so they are scored by zero-shot CLIP only and are markedly less reliable. Training data is also very uneven (2,015 images for Quartz against 36 for Azurite, a 56:1 ratio), which is why balanced accuracy sits 13 points below top-1. The **Limitations** tab in the app's About section spells all of this out.
 
 ## Quick start
 

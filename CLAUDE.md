@@ -47,7 +47,9 @@ There are no tests. `backend/tests/` contains only an empty `__init__.py`; `pyte
   - **zero-shot**: cosine similarity against pre-computed text embeddings, `softmax(sim / 0.01)`
   - **trained probe** (only if `public/models/probe.json` exists): multinomial logistic regression over the classes it covers; uncovered classes fall back to zero-shot scaled by `0.3`, then the whole vector is renormalized
 
-No probe is committed (`*.pkl` is gitignored and was never in the repo), so the app runs pure zero-shot by default — exactly how the Python service behaved without its pickle. Measured on real specimen photos, zero-shot gets roughly 4 in 5 right at top-1; the metrics shown in the About section come from `data/model_metrics.json` and describe the *trained* probe, not the zero-shot path.
+A trained probe **is** committed at `public/models/probe.json` (25 of the 30 classes; Bauxite, Diamond, Olivine, Talc and Halite have no data anywhere in mineralimage5K-98). `data/model_metrics.json` describes exactly this probe, measured on the held-out split: **71.2 % top-1, 88.9 % top-3, 58.5 % balanced**.
+
+Do not be tempted to swap the blend for pure zero-shot. Measured on the same test split, zero-shot alone scores **19.2 % top-1** — a small sample of visually distinctive minerals (pyrite, azurite) makes zero-shot look far better than it is. Sweeping the mixture weight showed the probe-dominant end is flat (w=0.9 costs 0.1 pp, w=0.8 costs 0.3 pp), so there is room to blend for out-of-distribution robustness, but nothing measured so far justifies diverging from the Python rule.
 
 Two settings in `worker.ts` are deliberate and easy to break:
 
