@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { onStatus } from '../ml/engine';
+import { isUsingProbe, onStatus } from '../ml/engine';
 import type { EngineStatus } from '../ml/engine';
 
 interface NavigationProps {
@@ -9,27 +9,40 @@ interface NavigationProps {
 }
 
 /**
+ * The pill's own states: the engine's four, plus `degraded` — loaded and
+ * answering, but without probe.json, so on zero-shot alone. That case reports
+ * `ready` from the engine, and showing it as a healthy green "Model ready"
+ * would repeat the mistake this pill was written to fix.
+ */
+type StatusKey = EngineStatus | 'degraded';
+
+/**
  * Wording for the status pill. This used to be a hardcoded "Online" badge,
  * which claimed the model was ready while it was still downloading — or had
  * failed outright. It now reflects the engine's actual state.
  */
-const STATUS_LABEL: Record<EngineStatus, string> = {
+const STATUS_LABEL: Record<StatusKey, string> = {
   idle: 'Starting',
   loading: 'Loading model',
   ready: 'Model ready',
+  degraded: 'Reduced accuracy',
   error: 'Model unavailable',
 };
 
-const STATUS_STYLE: Record<EngineStatus, { pill: string; dot: string; text: string }> = {
+const STATUS_STYLE: Record<StatusKey, { pill: string; dot: string; text: string }> = {
   idle: { pill: 'bg-gray-50 border-gray-200', dot: 'bg-gray-400', text: 'text-gray-600' },
   loading: { pill: 'bg-violet-50 border-violet-200/80', dot: 'bg-violet-500', text: 'text-violet-700' },
   ready: { pill: 'bg-emerald-50 border-emerald-200/80', dot: 'bg-emerald-500', text: 'text-emerald-700' },
+  degraded: { pill: 'bg-amber-50 border-amber-200', dot: 'bg-amber-500', text: 'text-amber-700' },
   error: { pill: 'bg-red-50 border-red-200', dot: 'bg-red-500', text: 'text-red-700' },
 };
 
-function useEngineStatus(): EngineStatus {
-  const [status, setStatus] = useState<EngineStatus>('idle');
-  useEffect(() => onStatus(setStatus), []);
+function useEngineStatus(): StatusKey {
+  const [status, setStatus] = useState<StatusKey>('idle');
+  useEffect(
+    () => onStatus((s) => setStatus(s === 'ready' && isUsingProbe() === false ? 'degraded' : s)),
+    [],
+  );
   return status;
 }
 

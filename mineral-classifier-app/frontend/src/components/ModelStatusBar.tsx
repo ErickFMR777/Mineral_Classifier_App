@@ -5,6 +5,8 @@ import type { EngineStatus, ModelLoadProgress } from '../ml/engine';
 interface Props {
   status: EngineStatus;
   progress: ModelLoadProgress | null;
+  /** `false` once the model is ready but probe.json was missing. */
+  usingProbe: boolean | null;
 }
 
 const formatMB = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(0)} MB`;
@@ -14,7 +16,7 @@ const formatMB = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(0)} MB`;
  * the browser afterwards, so being explicit about what is happening (and that
  * it only happens once) matters a lot more than hiding it behind a spinner.
  */
-export const ModelStatusBar: React.FC<Props> = ({ status, progress }) => {
+export const ModelStatusBar: React.FC<Props> = ({ status, progress, usingProbe }) => {
   if (status === 'error') {
     return (
       <div className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3">
@@ -33,6 +35,28 @@ export const ModelStatusBar: React.FC<Props> = ({ status, progress }) => {
   }
 
   if (status === 'ready') {
+    // The engine reports ready either way, so without this the one failure mode
+    // that costs the most accuracy — a deployment missing probe.json — would
+    // look exactly like a healthy one to the user.
+    if (usingProbe === false) {
+      return (
+        <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+          <svg className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.008v.008H12v-.008z" />
+          </svg>
+          <div>
+            <p className="text-sm font-semibold text-amber-800">
+              Running without the trained classifier
+            </p>
+            <p className="mt-0.5 text-xs text-amber-700">
+              probe.json could not be loaded, so predictions fall back to zero-shot matching
+              and are much less accurate. Results below should not be relied on.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="flex items-center gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2.5">
         <span className="relative flex h-2 w-2 flex-shrink-0">

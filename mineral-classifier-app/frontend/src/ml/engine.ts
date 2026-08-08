@@ -46,6 +46,14 @@ let currentStatus: EngineStatus = 'idle';
 let currentDetail: string | undefined;
 let currentProgress: ModelLoadProgress | null = null;
 
+// Whether the worker found probe.json. Without it the classifier still answers
+// — it silently degrades to zero-shot, which is ~19% top-1 instead of ~71% —
+// so this has to reach the UI rather than being dropped on the floor.
+let currentUsingProbe: boolean | null = null;
+
+/** `null` until the model reports ready; `false` means probe.json was missing. */
+export const isUsingProbe = (): boolean | null => currentUsingProbe;
+
 export const onProgress = (fn: ProgressListener): (() => void) => {
   progressListeners.add(fn);
   if (currentProgress) fn(currentProgress);
@@ -97,6 +105,9 @@ function getWorker(): Worker {
         break;
       }
       case 'ready':
+        // Set before emitting, so a listener reading isUsingProbe() from its
+        // status callback sees the value that goes with this 'ready'.
+        currentUsingProbe = msg.usingProbe;
         emitStatus('ready');
         break;
       case 'result': {

@@ -8,7 +8,7 @@ import { MineralCatalog } from './components/MineralCatalog'
 import { AboutSection } from './components/AboutSection'
 import { ModelStatusBar } from './components/ModelStatusBar'
 import { classifyMineral } from './api/client'
-import { onProgress, onStatus, preloadModel } from './ml/engine'
+import { isUsingProbe, onProgress, onStatus, preloadModel } from './ml/engine'
 import type { EngineStatus, ModelLoadProgress } from './ml/engine'
 import { ClassificationResult as IClassificationResult } from './types'
 import './styles/globals.css'
@@ -21,13 +21,17 @@ function App() {
   const [activeSection, setActiveSection] = useState('classifier')
   const [modelStatus, setModelStatus] = useState<EngineStatus>('idle')
   const [modelProgress, setModelProgress] = useState<ModelLoadProgress | null>(null)
+  const [usingProbe, setUsingProbe] = useState<boolean | null>(null)
   const mainRef = useRef<HTMLDivElement>(null)
 
   // Start pulling the CLIP weights immediately so the download overlaps with
   // the user picking a photo instead of stalling the first classification.
   useEffect(() => {
     const offProgress = onProgress(setModelProgress)
-    const offStatus = onStatus((status) => setModelStatus(status))
+    const offStatus = onStatus((status) => {
+      setModelStatus(status)
+      setUsingProbe(isUsingProbe())
+    })
     preloadModel()
     return () => {
       offProgress()
@@ -119,7 +123,7 @@ function App() {
                   </div>
 
                   <div className="p-6 sm:p-8 space-y-6">
-                    <ModelStatusBar status={modelStatus} progress={modelProgress} />
+                    <ModelStatusBar status={modelStatus} progress={modelProgress} usingProbe={usingProbe} />
 
                     <UploadZone
                       onImageSelected={handleImageSelected}
